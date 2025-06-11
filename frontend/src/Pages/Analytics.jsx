@@ -1,373 +1,440 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, ArcElement } from 'chart.js';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
-import { TrendingUp, TrendingDown, Award, BarChart3, Search, Calendar, Bell, Filter, Download, Plus, MoreHorizontal, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { TrendingUp, TrendingDown, Award, BarChart3, Filter, Download, Upload, RefreshCw, AlertCircle, Loader } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, ArcElement);
 
+const API_BASE_URL =   'http://127.0.0.1:8000/api';
+
+
+const CHART_OPTIONS = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: 'top',
+      labels: {
+        color: '#6B7280',
+        font: { size: 12 }
+      }
+    },
+    title: { display: false }
+  },
+  scales: {
+    x: {
+      ticks: { color: '#6B7280' },
+      grid: { color: '#F3F4F6', borderColor: '#E5E7EB' }
+    },
+    y: {
+      beginAtZero: true,
+      ticks: { color: '#6B7280' },
+      grid: { color: '#F3F4F6', borderColor: '#E5E7EB' }
+    }
+  }
+};
+
+const DOUGHNUT_OPTIONS = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: 'top',
+      labels: {
+        color: '#6B7280',
+        font: { size: 12 }
+      }
+    }
+  }
+};
+
+const REPORT_TYPES = {
+  'sales-trends': {
+    label: 'Sales Performance Analysis',
+    metrics: [
+      { value: 'monthly-growth', label: 'Monthly Growth Rate' },
+      { value: 'quarterly-comparison', label: 'Quarterly Comparison' },
+      { value: 'year-over-year', label: 'Year-over-Year Analysis' },
+      { value: 'regional-performance', label: 'Regional Performance' }
+    ]
+  },
+  'product-performance': {
+    label: 'Product Performance Metrics',
+    metrics: [
+      { value: 'revenue-ranking', label: 'Revenue Ranking' },
+      { value: 'volume-analysis', label: 'Volume Analysis' },
+      { value: 'market-share', label: 'Market Share Analysis' },
+      { value: 'profitability', label: 'Profitability Analysis' }
+    ]
+  },
+  'growth-analysis': {
+    label: 'Growth & Trend Analysis',
+    metrics: [
+      { value: 'growth-leaders', label: 'Growth Leaders' },
+      { value: 'trend-analysis', label: 'Trend Analysis' },
+      { value: 'forecast', label: 'Performance Forecast' },
+      { value: 'opportunity-analysis', label: 'Opportunity Analysis' }
+    ]
+  }
+};
+
+class AnalyticsAPI {
+  static async uploadFile(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE_URL}/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  static async getChartData(reportType, metric, filters = {}) {
+    const params = new URLSearchParams({
+      reportType,
+      metric,
+      ...filters
+    });
+
+    const response = await fetch(`${API_BASE_URL}/chart-data?${params}`);
+    
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  static async exportReport(reportType, metric, format = 'pdf') {
+    const params = new URLSearchParams({
+      reportType,
+      metric,
+      format
+    });
+
+    const response = await fetch(`${API_BASE_URL}/export?${params}`);
+    
+    if (!response.ok) {
+      throw new Error(`Export failed: ${response.statusText}`);
+    }
+
+    return response.blob();
+  }
+}
+
+
+const useAPI = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const callAPI = useCallback(async (apiCall) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const result = await apiCall();
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { callAPI, loading, error, clearError: () => setError(null) };
+};
+
+// Components
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center h-64">
+    <Loader className="w-8 h-8 animate-spin text-blue-600" />
+  </div>
+);
+
+const ErrorMessage = ({ message, onRetry }) => (
+  <div className="flex items-center justify-center h-64">
+    <div className="text-center">
+      <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+      <p className="text-red-600 mb-4">{message}</p>
+      {onRetry && (
+        <button
+          onClick={onRetry}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+        >
+          Retry
+        </button>
+      )}
+    </div>
+  </div>
+);
+
+const MetricCard = ({ title, value, icon: Icon, color, bgColor, change, changeType }) => (
+  <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-sm transition-shadow">
+    <div className="flex items-center justify-between mb-4">
+      <div className={`p-2 rounded-lg ${bgColor}`}>
+        <Icon className={`w-5 h-5 ${color}`} />
+      </div>
+      {change && (
+        <div className={`text-xs px-2 py-1 rounded-full ${
+          changeType === 'positive' ? 'text-green-600 bg-green-50' :
+          changeType === 'negative' ? 'text-red-600 bg-red-50' :
+          'text-gray-600 bg-gray-50'
+        }`}>
+          {changeType === 'positive' && <TrendingUp className="inline w-3 h-3 mr-1" />}
+          {changeType === 'negative' && <TrendingDown className="inline w-3 h-3 mr-1" />}
+          {change}
+        </div>
+      )}
+    </div>
+    <div className="text-sm text-gray-500 mb-1">{title}</div>
+    <div className="text-2xl font-bold text-gray-900">{value}</div>
+  </div>
+);
+
+const ChartRenderer = ({ chartData, loading, error }) => {
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage message={error} />;
+  if (!chartData) return null;
+
+  const chartProps = {
+    data: chartData.data,
+    options: chartData.type === 'doughnut' ? DOUGHNUT_OPTIONS : CHART_OPTIONS
+  };
+
+  switch (chartData.type) {
+    case 'line':
+      return <Line {...chartProps} />;
+    case 'bar':
+      return <Bar {...chartProps} />;
+    case 'doughnut':
+      return <Doughnut {...chartProps} />;
+    default:
+      return <div className="text-center text-gray-500 py-8">Unsupported chart type</div>;
+  }
+};
+
+// Main Component
 const Analytics = () => {
   const [selectedReport, setSelectedReport] = useState('');
   const [selectedMetric, setSelectedMetric] = useState('');
   const [chartData, setChartData] = useState(null);
   const [summaryCards, setSummaryCards] = useState([]);
+  const [file, setFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState('');
+  
+  const { callAPI, loading, error, clearError } = useAPI();
 
-  const reportTypes = {
-    'sales-trends': {
-      label: 'Sales Trends (Growth/Decline) Across Areas',
-      metrics: [
-        { value: 'monthly-growth', label: 'Monthly Growth Rate' },
-        { value: 'quarterly-comparison', label: 'Quarterly Comparison' },
-        { value: 'year-over-year', label: 'Year-over-Year Analysis' },
-        { value: 'area-performance', label: 'Area Performance Comparison' }
-      ]
-    },
-    'top-performers': {
-      label: 'Top-Performing Medicines by Area',
-      metrics: [
-        { value: 'revenue-based', label: 'Revenue Based Ranking' },
-        { value: 'volume-based', label: 'Volume Based Ranking' },
-        { value: 'market-share', label: 'Market Share Analysis' },
-        { value: 'profitability', label: 'Profitability Index' }
-      ]
-    },
-    'growth-medicines': {
-      label: 'Medicines Showing Growth',
-      metrics: [
-        { value: 'fastest-growing', label: 'Fastest Growing Products' },
-        { value: 'consistent-growth', label: 'Consistent Growth Pattern' },
-        { value: 'emerging-products', label: 'Emerging Products' },
-        { value: 'growth-potential', label: 'Growth Potential Analysis' }
-      ]
-    }
-  };
-
-  const generateChartData = (reportType, metric) => {
-    const areas = ['North Zone', 'South Zone', 'East Zone', 'West Zone', 'Central Zone'];
-    const medicines = ['Paracetamol', 'Aspirin', 'Ibuprofen', 'Amoxicillin', 'Metformin', 'Atorvastatin'];
-    
-    switch (reportType) {
-      case 'sales-trends':
-        return {
-          type: 'line',
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: areas.slice(0, 3).map((area, index) => ({
-              label: area,
-              data: Array.from({length: 6}, () => Math.floor(Math.random() * 100) + 50),
-              borderColor: ['#3B82F6', '#EF4444', '#10B981'][index],
-              backgroundColor: ['#3B82F620', '#EF444420', '#10B98120'][index],
-              tension: 0.4,
-              borderWidth: 3
-            }))
-          }
-        };
-      
-      case 'top-performers':
-        return {
-          type: 'bar',
-          data: {
-            labels: medicines.slice(0, 5),
-            datasets: [{
-              label: 'Performance Score',
-              data: Array.from({length: 5}, () => Math.floor(Math.random() * 50) + 50),
-              backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'],
-              borderRadius: 8
-            }]
-          }
-        };
-      
-      case 'growth-medicines':
-        return {
-          type: 'doughnut',
-          data: {
-            labels: medicines.slice(0, 4),
-            datasets: [{
-              data: Array.from({length: 4}, () => Math.floor(Math.random() * 30) + 10),
-              backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'],
-              borderWidth: 0
-            }]
-          }
-        };
-      
-      default:
-        return null;
-    }
-  };
-
-  const generateSummaryCards = (reportType) => {
-    switch (reportType) {
-      case 'sales-trends':
-        return [
-          { title: 'Overall Growth', value: '+12.5%', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-50', change: '+2.5%', changeType: 'positive' },
-          { title: 'Best Performing Area', value: 'North Zone', icon: Award, color: 'text-blue-600', bgColor: 'bg-blue-50', change: 'Leading', changeType: 'neutral' },
-          { title: 'Monthly Avg Growth', value: '+8.3%', icon: BarChart3, color: 'text-purple-600', bgColor: 'bg-purple-50', change: '+1.2%', changeType: 'positive' },
-          { title: 'Areas in Decline', value: '1 of 5', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-50', change: '-0.8%', changeType: 'negative' }
-        ];
-      
-      case 'top-performers':
-        return [
-          { title: 'Top Medicine', value: 'Paracetamol', icon: Award, color: 'text-yellow-600', bgColor: 'bg-yellow-50', change: 'Leader', changeType: 'neutral' },
-          { title: 'Highest Revenue', value: '₹2.5M', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-50', change: '+15%', changeType: 'positive' },
-          { title: 'Market Leader', value: 'North Zone', icon: BarChart3, color: 'text-blue-600', bgColor: 'bg-blue-50', change: '+8%', changeType: 'positive' },
-          { title: 'Performance Score', value: '94/100', icon: Award, color: 'text-purple-600', bgColor: 'bg-purple-50', change: '+5pts', changeType: 'positive' }
-        ];
-      
-      case 'growth-medicines':
-        return [
-          { title: 'Fastest Growing', value: 'Metformin', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-50', change: '+45%', changeType: 'positive' },
-          { title: 'Growth Rate', value: '+45%', icon: BarChart3, color: 'text-blue-600', bgColor: 'bg-blue-50', change: '+12%', changeType: 'positive' },
-          { title: 'New Launches', value: '3 Products', icon: Award, color: 'text-purple-600', bgColor: 'bg-purple-50', change: 'New', changeType: 'neutral' },
-          { title: 'Potential Revenue', value: '₹1.8M', icon: TrendingUp, color: 'text-yellow-600', bgColor: 'bg-yellow-50', change: '+25%', changeType: 'positive' }
-        ];
-      
-      default:
-        return [];
-    }
-  };
-
+  // Fetch chart data when report/metric changes
   useEffect(() => {
     if (selectedReport && selectedMetric) {
-      const data = generateChartData(selectedReport, selectedMetric);
-      setChartData(data);
-      setSummaryCards(generateSummaryCards(selectedReport));
+      fetchChartData();
     }
   }, [selectedReport, selectedMetric]);
 
-  const handleReportChange = (event) => {
-    setSelectedReport(event.target.value);
-    setSelectedMetric('');
-  };
+  const fetchChartData = useCallback(async () => {
+    try {
+      const data = await callAPI(() => 
+        AnalyticsAPI.getChartData(selectedReport, selectedMetric)
+      );
+      
+      setChartData(data.chartData);
+      setSummaryCards(data.summaryCards || []);
+    } catch (err) {
+      console.error('Failed to fetch chart data:', err);
+    }
+  }, [selectedReport, selectedMetric, callAPI]);
 
-  const handleMetricChange = (event) => {
-    setSelectedMetric(event.target.value);
-  };
+  const handleFileUpload = async () => {
+    if (!file) {
+      setUploadStatus('Please select a file');
+      return;
+    }
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top',
-        labels: {
-          color: '#6B7280',
-          font: {
-            size: 12
-          }
-        }
-      },
-      title: {
-        display: false
-      },
-    },
-    scales: chartData?.type === 'doughnut' ? {} : {
-      x: {
-        ticks: {
-          color: '#6B7280'
-        },
-        grid: {
-          color: '#F3F4F6',
-          borderColor: '#E5E7EB'
-        }
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: '#6B7280'
-        },
-        grid: {
-          color: '#F3F4F6',
-          borderColor: '#E5E7EB'
-        }
-      },
-    },
-  };
-
-  const renderChart = () => {
-    if (!chartData) return null;
-    
-    const chartProps = {
-      data: chartData.data,
-      options: chartOptions
-    };
-
-    switch (chartData.type) {
-      case 'line':
-        return <Line {...chartProps} />;
-      case 'bar':
-        return <Bar {...chartProps} />;
-      case 'doughnut':
-        return <Doughnut {...chartProps} />;
-      default:
-        return null;
+    try {
+      setUploadStatus('Uploading...');
+      await callAPI(() => AnalyticsAPI.uploadFile(file));
+      setUploadStatus('Upload successful');
+      setFile(null);
+      
+      // Refresh data after upload
+      if (selectedReport && selectedMetric) {
+        fetchChartData();
+      }
+    } catch (err) {
+      setUploadStatus(`Upload failed: ${err.message}`);
     }
   };
 
+  const handleExport = async () => {
+    if (!selectedReport || !selectedMetric) return;
+
+    try {
+      const blob = await callAPI(() => 
+        AnalyticsAPI.exportReport(selectedReport, selectedMetric)
+      );
+      
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${selectedReport}-${selectedMetric}-report.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('Export failed:', err);
+    }
+  };
+
+  const resetSelections = () => {
+    setSelectedReport('');
+    setSelectedMetric('');
+    setChartData(null);
+    setSummaryCards([]);
+    clearError();
+  };
+
   return (
-    <>
-    <div className="min-h-screen bg-gray-50 flex">
-     
+    <div className="min-h-screen bg-gray-50">
+      <div className="p-6">
+        {/* File Upload Section */}
+        <div className="mb-6 bg-white p-6 border border-gray-200 rounded-xl">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Data Upload</h2>
+          <div className="flex items-center gap-4">
+            <input
+              type="file"
+              accept=".csv,.xlsx,.xls,.txt,.pdf"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="flex-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+            <button
+              onClick={handleFileUpload}
+              disabled={loading || !file}
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center gap-2"
+            >
+              {loading ? <Loader className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+              Upload
+            </button>
+          </div>
+          {uploadStatus && (
+            <p className={`mt-3 text-sm ${uploadStatus.includes('failed') ? 'text-red-600' : 'text-green-600'}`}>
+              {uploadStatus}
+            </p>
+          )}
+        </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto">
-    
+        {/* Report Selection */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="bg-white rounded-xl p-6 border border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 mb-3">Report Type</label>
+            <select
+              value={selectedReport}
+              onChange={(e) => setSelectedReport(e.target.value)}
+              className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">Select Report Type</option>
+              {Object.entries(REPORT_TYPES).map(([key, config]) => (
+                <option key={key} value={key}>
+                  {config.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="bg-white rounded-xl p-6 border border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 mb-3">Metric</label>
+            <select
+              value={selectedMetric}
+              onChange={(e) => setSelectedMetric(e.target.value)}
+              disabled={!selectedReport}
+              className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:bg-gray-50"
+            >
+              <option value="">Select Metric</option>
+              {selectedReport && REPORT_TYPES[selectedReport].metrics.map((metric) => (
+                <option key={metric.value} value={metric.value}>
+                  {metric.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
 
-        <div className="p-6">
-          {/* Controls */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="bg-white rounded-xl p-4 border border-gray-200">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Report Type</label>
-              <select
-                value={selectedReport}
-                onChange={handleReportChange}
-                className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        {/* Summary Cards */}
+        {summaryCards.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {summaryCards.map((card, index) => (
+              <MetricCard key={index} {...card} />
+            ))}
+          </div>
+        )}
+
+        {/* Main Chart */}
+        <div className="bg-white rounded-xl p-6 border border-gray-200 mb-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-semibold text-gray-900">
+              {selectedReport && selectedMetric ? 
+                `${REPORT_TYPES[selectedReport]?.label} - ${REPORT_TYPES[selectedReport]?.metrics.find(m => m.value === selectedMetric)?.label}` : 
+                'Analytics Dashboard'
+              }
+            </h3>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={fetchChartData}
+                disabled={!selectedReport || !selectedMetric || loading}
+                className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                title="Refresh Data"
               >
-                <option value="">Select Report Type</option>
-                {Object.entries(reportTypes).map(([key, config]) => (
-                  <option key={key} value={key}>
-                    {config.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="bg-white rounded-xl p-4 border border-gray-200">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Metric</label>
-              <select
-                value={selectedMetric}
-                onChange={handleMetricChange}
-                disabled={!selectedReport}
-                className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:bg-gray-50"
+                <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+              </button>
+              <button
+                onClick={handleExport}
+                disabled={!selectedReport || !selectedMetric || loading}
+                className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                title="Export Report"
               >
-                <option value="">Select Metric</option>
-                {selectedReport && reportTypes[selectedReport].metrics.map((metric) => (
-                  <option key={metric.value} value={metric.value}>
-                    {metric.label}
-                  </option>
-                ))}
-              </select>
+                <Download className="w-5 h-5" />
+              </button>
+              <button
+                onClick={resetSelections}
+                className="p-2 text-gray-400 hover:text-gray-600"
+                title="Reset"
+              >
+                <Filter className="w-5 h-5" />
+              </button>
             </div>
           </div>
-
-          {/* Summary Cards */}
-          {summaryCards.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              {summaryCards.map((card, index) => {
-                const IconComponent = card.icon;
-                return (
-                  <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-sm transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`p-2 rounded-lg ${card.bgColor}`}>
-                        <IconComponent className={`w-5 h-5 ${card.color}`} />
-                      </div>
-                      <div className={`text-xs px-2 py-1 rounded-full ${
-                        card.changeType === 'positive' ? 'text-green-600 bg-green-50' :
-                        card.changeType === 'negative' ? 'text-red-600 bg-red-50' :
-                        'text-gray-600 bg-gray-50'
-                      }`}>
-                        {card.changeType === 'positive' && <TrendingUp className="inline w-3 h-3 mr-1" />}
-                        {card.changeType === 'negative' && <TrendingDown className="inline w-3 h-3 mr-1" />}
-                        {card.change}
-                      </div>
-                    </div>
-                    <div className="text-sm text-gray-500 mb-1">{card.title}</div>
-                    <div className="text-2xl font-bold text-gray-900">{card.value}</div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Main Chart */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200 mb-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {selectedReport && selectedMetric ? 
-                  `${reportTypes[selectedReport]?.label} - ${reportTypes[selectedReport]?.metrics.find(m => m.value === selectedMetric)?.label}` : 
-                  'Analytics Overview'
-                }
-              </h3>
-              <div className="flex items-center space-x-2">
-                <button className="p-2 text-gray-400 hover:text-gray-600">
-                  <Filter className="w-4 h-4" />
-                </button>
-                <button className="p-2 text-gray-400 hover:text-gray-600">
-                  <Download className="w-4 h-4" />
-                </button>
-                <button className="p-2 text-gray-400 hover:text-gray-600">
-                  <MoreHorizontal className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-            
+          
+          <div className="h-96">
             {selectedReport && selectedMetric ? (
-              <div className="h-80">
-                {renderChart()}
-              </div>
+              <ChartRenderer 
+                chartData={chartData} 
+                loading={loading} 
+                error={error} 
+              />
             ) : (
-              <div className="h-80 flex items-center justify-center text-gray-500">
+              <div className="flex items-center justify-center h-full text-gray-500">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">📊</div>
-                  <div className="text-xl font-semibold mb-2 text-gray-700">
-                    Select Report Type and Metric
-                  </div>
-                  <div className="text-gray-500">
-                    Choose from the dropdowns above to view your analytics
-                  </div>
+                  <BarChart3 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                  <h3 className="text-lg font-medium text-gray-700 mb-2">
+                    Select Report Configuration
+                  </h3>
+                  <p className="text-gray-500">
+                    Choose report type and metric to view analytics
+                  </p>
                 </div>
-                </div>
-              )}
-            
+              </div>
+            )}
           </div>
-
-          {/* Insights */}
-          {selectedReport && selectedMetric && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-xl p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Insights</h3>
-                <div className="space-y-4">
-                  <div className="border-l-4 border-blue-500 pl-4">
-                    <div className="text-blue-600 font-medium mb-1">Performance Trend</div>
-                    <div className="text-gray-600 text-sm">
-                      Based on current data, the selected metric shows positive momentum across most coverage areas.
-                    </div>
-                  </div>
-                  <div className="border-l-4 border-green-500 pl-4">
-                    <div className="text-green-600 font-medium mb-1">Recommendation</div>
-                    <div className="text-gray-600 text-sm">
-                      Focus on replicating successful strategies from top-performing areas to underperforming regions.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-xl p-6 border border-gray-200">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
-                  <button className="text-blue-600 hover:text-blue-800">
-                    <Plus className="w-5 h-5" />
-                  </button>
-                </div>
-                <div className="space-y-3">
-                  <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-                    <div className="font-medium text-gray-900">Export Report</div>
-                    <div className="text-sm text-gray-500">Download current analytics data</div>
-                  </button>
-                  <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-                    <div className="font-medium text-gray-900">Schedule Report</div>
-                    <div className="text-sm text-gray-500">Set up automated reporting</div>
-                  </button>
-                  <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-                    <div className="font-medium text-gray-900">Share Dashboard</div>
-                    <div className="text-sm text-gray-500">Collaborate with team members</div>
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
-    </>
   );
 };
 

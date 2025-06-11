@@ -1,0 +1,1152 @@
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 1
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+EDAYA MINI MARGIN MEDICALS CHAVAKKADF
+ 8256    13-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14    10          321.40
+                                                                            ------------
+CUSTOMER TOTAL                                                                    321.40
+                                                                            ------------
+EVEEVEES MEDICALS PAVARTTYF
+ 8227    13-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     3           96.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                     96.42
+                                                                            ------------
+EKOLATHINGAL  DRUG HOUSE PAVARATTYF
+ 9567    20-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     5          160.70
+ 9567    20-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     5           71.45
+ 8068    13-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86    10          328.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                    560.75
+                                                                            ------------
+EBHAVANA MEDICALS CHAVAKKADF
+ 8238    13-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     3           96.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                     96.42
+                                                                            ------------
+ENAMBIYATH MEDICALS ENAMAKKALF
+ 10960   27-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     5          160.70
+ 9563    20-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     5          275.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    435.70
+                                                                            ------------
+EHYSON MEDICALS THOZHIYURF
+ 11246   29-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     1           71.43
+                                                                            ------------
+CUSTOMER TOTAL                                                                     71.43
+                                                                            ------------
+ESHIFA MEDICALS CHAVAKKADF
+ 6812    05-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     5          117.85
+ 6812    05-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     5          160.70
+ 6812    05-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                    377.13
+                                                                            ------------
+ENEETHI MEDICAL STORE PSCB NO 3918 PAVARTTYF
+ 6865    05-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    10          235.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    235.70
+                                                                            ------------
+EDELITE MEDICALS OLLURF
+ 11065   28-05-2025 CITRA PLUS LIQ. 100 ML  241655  Sep-26   57.14     2          114.28
+ 7250    08-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     2          135.72
+ 11065   28-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     2          135.72
+ 7250    08-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     3          165.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    550.72
+                                                                            ------------
+EP.T.F MEDICALS CHOONDALF
+ 8935    16-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 2
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                     65.72
+                                                                            ------------
+EMAR OSTHATHEOS MEDICLS KUNNAMKULAMF
+ 8928    16-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29     6          235.74
+ 10315   23-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     6          197.16
+ 11569   30-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                    531.48
+                                                                            ------------
+EST.JOSEPH S HOSPITAL CHOONDALF
+ 8971    16-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     5          160.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    160.70
+                                                                            ------------
+EREENA DRUG HOUSE GURUVAYURF
+ 11562   30-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     5          160.70
+ 9635    20-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     2          263.62
+                                                                            ------------
+CUSTOMER TOTAL                                                                    424.32
+                                                                            ------------
+EUNITY HEALTH SERVICE KANIPAYYURF
+ 8921    16-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10          357.10
+ 10364   23-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00    20         1100.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1457.10
+                                                                            ------------
+ESAGAR MEDICALS KECHERYF
+ 8421    14-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     3          165.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    165.00
+                                                                            ------------
+ERAJA MEDICALS GURUVAYOORF
+ 7559    09-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86    10          328.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                    328.60
+                                                                            ------------
+EANUGRAHA MEDICALS GURUVAYURF
+ 6402    02-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+                                                                            ------------
+CUSTOMER TOTAL                                                                     62.85
+                                                                            ------------
+EDENNY S MEDICALS GURUVAYURF
+ 11532   30-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     1          131.81
+ 11532   30-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+                                                                            ------------
+CUSTOMER TOTAL                                                                    194.66
+                                                                            ------------
+EJANAPAKSHAM   MEDICALS KUNNAMKULAMF
+ 11678   31-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     1           21.43
+                                                                            ------------
+CUSTOMER TOTAL                                                                     21.43
+                                                                            ------------
+EJANASEVANA MEDICINES GURUVAYOORF
+ 10620   26-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     2          125.70
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 3
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 11448   30-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     6          197.16
+ 6491    03-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     6          214.26
+ 6172    02-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     4          220.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    757.12
+                                                                            ------------
+ERELAX MEDICALS THAIKKAD  GURUVAYURF
+ 6435    02-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     2           71.42
+ 7450    09-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     2           71.42
+ 10383   23-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     2           71.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                    214.26
+                                                                            ------------
+EOPAL CARE MEDICALS KECHERYF
+ 7539    09-05-2025 SHIRCAL 15 S            ST24-293Sep-26   41.43     2           82.86
+                                                                            ------------
+CUSTOMER TOTAL                                                                     82.86
+                                                                            ------------
+EUDAYA MEDICALS ALAGAPA NAGARF
+ 9044    17-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                     98.58
+                                                                            ------------
+ERAGAM MEDICALS THALOREF
+ 6494    03-05-2025 SIMETHIUM SOFTGEL CAPS  ALD5018 Dec-26   50.00     5          250.00
+ 9046    17-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43    10          214.30
+                                                                            ------------
+CUSTOMER TOTAL                                                                    464.30
+                                                                            ------------
+EPRABHATH MEDICALS KODAKARAF
+ 9031    16-05-2025 PRO-BA CAPS 10 S        CB-11240Oct-26   75.00     1           75.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                     75.00
+                                                                            ------------
+ESANTH  MEDICALS KODAKARAF
+ 6707    05-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     2          125.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    125.70
+                                                                            ------------
+EAMRUTHA MEDICALS ANJOORF
+ 8283    14-05-2025 SIMETHIUM SOFTGEL CAPS  ALD5018 Dec-26   50.00     4          200.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    200.00
+                                                                            ------------
+EA-ONE MEDICALS NAYARANGADIF
+ 8593    15-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    10          235.70
+ 8593    15-05-2025 CITRA PLUS LIQ. 100 ML  241655  Sep-26   57.14    10     2    571.40
+                                                                            ------------
+CUSTOMER TOTAL                                                                    807.10
+                                                                            ------------
+ENEW ERINJIPADY MEDICALS VADAKKEKAADF
+ 8217    13-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     2           64.28
+                                                                            ------------
+CUSTOMER TOTAL                                                                     64.28
+                                                                            ------------
+EMARINA HOSPITAL IRINJALAKUDAF
+ 8273    14-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43    10     1    714.30
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 4
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 8273    14-05-2025 MULTIBEETA CAP 10 S     DF250168Sep-26   74.58    10          745.80
+ 7292    09-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76    10     1   3047.60
+ 9976    22-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76    20     2   6095.20
+ 9975    22-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86    10     1    678.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                  11281.50
+                                                                            ------------
+EPAULY SONS MEDICALS IRINJALAKUDAF
+ 10426   24-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     5           71.45
+ 6478    03-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     5          339.30
+ 10426   24-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     3          203.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                    614.33
+                                                                            ------------
+EHRUDAYA MEDICALS CHARITABLE TRUST IRINJALAKUDAF
+ 6465    03-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     4           94.28
+                                                                            ------------
+CUSTOMER TOTAL                                                                     94.28
+                                                                            ------------
+ENEW JANANEETHI MEDICALS IRINJALKUDAF
+ 11627   30-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     6          197.16
+                                                                            ------------
+CUSTOMER TOTAL                                                                    197.16
+                                                                            ------------
+ENEETHI MEDICALS NO-6 IRINJALAKUDAF
+ 8515    14-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29    10          142.90
+ 7289    08-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43    30     3   2142.90
+ 11104   28-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43    30     3   2142.90
+ 8515    14-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    50     5   1785.50
+ 7289    08-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     0     3      0.00
+ 7289    08-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43    50     2   3321.50
+ 8515    14-05-2025 SIMETHIUM SOFTGEL CAPS  ALD5018 Dec-26   50.00    10          500.00
+ 11104   28-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76    50     5  15238.00
+ 8515    14-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86    10     1    678.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                  25952.30
+                                                                            ------------
+EASTRO HEALTH CARE IRINJALAKUDAF
+ 7279    08-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    50    20   1178.50
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1178.50
+                                                                            ------------
+EGRAND DRUG HOUSE KODUNGALLURF
+ 8619    15-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14    10          321.40
+                                                                            ------------
+CUSTOMER TOTAL                                                                    321.40
+                                                                            ------------
+ELAKSHMI MEDICALS ERIYADF
+ 11372   29-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0225Jul-26   32.14     5          160.70
+ 11372   29-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     5          160.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    321.40
+                                                                            ------------
+ENEETHI MEDICALS SC 768 KONATHUKUNNUF
+ 10044   22-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10          357.10
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 5
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                    357.10
+                                                                            ------------
+ECHINNUS MEDICALS AKKIKKAVUF
+ 10418   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                     98.58
+                                                                            ------------
+ELIFE HYPER PHARMA PERUMBILAVUF
+ 10475   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     4          131.44
+                                                                            ------------
+CUSTOMER TOTAL                                                                    131.44
+                                                                            ------------
+ESEVANA MEDICALS CHANGARAMKULAMF
+ 7463    09-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     3           64.29
+ 9000    16-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     5          107.15
+ 10371   23-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     2           65.72
+                                                                            ------------
+CUSTOMER TOTAL                                                                    237.16
+                                                                            ------------
+EM.S MEDICALS CHELAKKARAF
+ 7028    08-05-2025 SITAJUST 10 S           TB-01253Dec-26   55.00    10          550.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    550.00
+                                                                            ------------
+ESREELAKSHMI MEDICALS CHELAKKARAF
+ 11215   29-05-2025 MULTIBEETA CAP 10 S     DF250168Sep-26   74.58     5          372.90
+ 11215   29-05-2025 SHIRTEN 20 10 S         TGT-0724Jun-26   57.14     5          285.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    658.60
+                                                                            ------------
+EK.P.MEDICALS CHELAKKARAF
+ 11113   28-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81    10     1   1318.10
+ 11113   28-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14    10     1    321.40
+ 9496    19-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43    10     1    714.30
+ 9787    21-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00    10     1    550.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                   2903.80
+                                                                            ------------
+ELILLY MEDICALS OTTUPARAF
+ 11033   28-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     3           64.29
+ 8416    14-05-2025 PRO-BA CAPS 10 S        CB-11240Oct-26   75.00     2          150.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    214.29
+                                                                            ------------
+ESANTHI MEDICALS WADAKKANCHERYF
+ 8422    14-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     3           70.71
+ 11043   28-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     3          165.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    235.71
+                                                                            ------------
+EVIJAYA MEDICALS KARUKAPUTHURF
+ 7794    12-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14    10     1    321.40
+
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 6
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                    321.40
+                                                                            ------------
+EHARISREE MEDICALS CHELAKKARAF
+ 9481    19-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     5          160.70
+ 9481    19-05-2025 SHIRTEN 20 10 S         TGT-0724Jun-26   57.14     4          228.56
+                                                                            ------------
+CUSTOMER TOTAL                                                                    389.26
+                                                                            ------------
+ENEETHI  MEDICALS CHELAKKARAF
+ 9957    21-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29    20          785.80
+ 7984    12-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00    20         1100.00
+ 7984    12-05-2025 SIMETHIUM SOFTGEL CAPS  ALD5018 Dec-26   50.00     5          250.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                   2135.80
+                                                                            ------------
+ENEW SAKTHY MEDICALS CHELAKRARAF
+ 7269    08-05-2025 MULTIBEETA CAP 10 S     DF250168Sep-26   74.58     2          149.16
+                                                                            ------------
+CUSTOMER TOTAL                                                                    149.16
+                                                                            ------------
+EDAYANANTHA DRUG HOUSE CHELAKKARAF
+ 8330    14-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29     5          196.45
+                                                                            ------------
+CUSTOMER TOTAL                                                                    196.45
+                                                                            ------------
+ENANMA MEDICALS KILLIMANGALAMF
+ 7023    08-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     4           85.72
+ 9817    21-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     2           42.86
+ 6970    08-05-2025 MULTIBEETA CAP 10 S     DF250168Sep-26   74.58     3          223.74
+ 8327    14-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+ 9817    21-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+ 10951   27-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     3          107.13
+                                                                            ------------
+CUSTOMER TOTAL                                                                    590.89
+                                                                            ------------
+EAMRUTHA MEDICALS CHELAKKARAF
+ 8328    14-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     5          107.15
+ 8328    14-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29     5          196.45
+ 7337    09-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     3          107.13
+ 9814    21-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     3          165.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    575.73
+                                                                            ------------
+ESASTHA HEALTH CARE& WADAKANCHERYF
+ 7268    08-05-2025 BESILENT COUGH SYP 100M CS-01250Dec-26   60.71    40    15   2428.40
+ 7268    08-05-2025 BESILENT COUGH SYP 100M CS-09241Aug-26   60.71    10          607.10
+ 10793   26-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43    10          214.30
+ 7271    08-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     3          203.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                   3453.38
+                                                                            ------------
+ENEETHI MEDICAL STORE PUTHANTHODEF
+ 8764    15-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43    10          714.30
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 7
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                    714.30
+                                                                            ------------
+ERELIENCE MEDICALS KATTOORF
+ 8557    15-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10     1    357.10
+                                                                            ------------
+CUSTOMER TOTAL                                                                    357.10
+                                                                            ------------
+EB.A.M HOSPITAL KARANCHIRAF
+ 11259   29-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14    10          321.40
+ 8375    14-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81    10     1   1318.10
+ 9878    21-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86    10          328.60
+ 8375    14-05-2025 PRO-BA CAPS 10 S        CB-11240Oct-26   75.00    10          750.00
+ 6686    03-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    50     5   1785.50
+ 10616   26-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    30     3   1071.30
+ 11259   29-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    30     3   1071.30
+ 6458    03-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00    10          550.00
+ 8375    14-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00    10          550.00
+ 9878    21-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00    10          550.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                   8296.20
+                                                                            ------------
+ESHONE MEDICALS CHERPUF
+ 9647    20-05-2025 RAPPIT LS 10 S          GC240304May-26   85.71     3          257.13
+                                                                            ------------
+CUSTOMER TOTAL                                                                    257.13
+                                                                            ------------
+ENEETHI MEDICALS MAPRANAMF
+ 6470    03-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00    10          550.00
+ 6470    03-05-2025 RAPPIT LS 10 S          GC240304May-26   85.71     6          514.26
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1064.26
+                                                                            ------------
+ENEETHI MEDICALS KARANCHIRAF
+ 8745    15-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    10          235.70
+ 7421    09-05-2025 CITRA PLUS LIQ. 100 ML  241655  Sep-26   57.14     3          171.42
+ 8745    15-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14    10          321.40
+ 8745    15-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81    10     1   1318.10
+ 6034    01-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14    10          321.40
+ 7421    09-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86    10          328.60
+ 6034    01-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    20          714.20
+ 8745    15-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76    10         3047.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                   6458.42
+                                                                            ------------
+EDAYA SPEC.SURG.CENTRE THRISSURF
+ 6375    02-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    60         1414.20
+ 9037    16-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    50         1178.50
+ 9683    20-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    60         1414.20
+ 10341   23-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    50         1178.50
+ 11504   30-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    60         1414.20
+                                                                            ------------
+CUSTOMER TOTAL                                                                   6599.60
+                                                                            ------------
+ESURYA MEDICALS PATTURAIKKALF
+ 11576   30-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29    30     6   1178.70
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 8
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 11576   30-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86    30     6    985.80
+ 11576   30-05-2025 PRO-BA CAPS 10 S        CB-11240Oct-26   75.00    10          750.00
+ 11576   30-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76    10     2   3047.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                   5962.10
+                                                                            ------------
+EMETRO MEDICALS THRISSURF
+ 11131   28-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     5          275.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    275.00
+                                                                            ------------
+EAMBILY MEDICALS MANNUTHYF
+ 10428   24-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     5          178.55
+                                                                            ------------
+CUSTOMER TOTAL                                                                    178.55
+                                                                            ------------
+EKEERTHANA MEDICALS THRISSURF
+ 9992    22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86    10          328.60
+                                                                            ------------
+CUSTOMER TOTAL                                                                    328.60
+                                                                            ------------
+ERELIANCE ENTERPRISES THRISSURF
+ 10093   22-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     3           70.71
+                                                                            ------------
+CUSTOMER TOTAL                                                                     70.71
+                                                                            ------------
+ETHOMSON MEDICALS VELURF
+ 8352    14-05-2025 MOXIUM 625 10 S         TAXCB406Oct-26  128.57     2          257.14
+                                                                            ------------
+CUSTOMER TOTAL                                                                    257.14
+                                                                            ------------
+ENEETHI MEDICALS, AMALA NAGARF
+ 9285    19-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+                                                                            ------------
+CUSTOMER TOTAL                                                                     65.72
+                                                                            ------------
+EGODWIN MEDICALS ERUMAPATTYF
+ 7175    08-05-2025 ATOSTAR 10MG 10 S       AVT-1124Oct-26   35.00     4          140.00
+ 9625    20-05-2025 ATOSTAR 10MG 10 S       AVT-1124Oct-26   35.00     3          105.00
+ 10904   27-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10          357.10
+ 7171    08-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     5          275.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    877.10
+                                                                            ------------
+EJANA NANMA PALAKKADF
+ 10126   22-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29     3          117.87
+ 10570   24-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     3          214.29
+ 9215    17-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76     2          609.52
+                                                                            ------------
+CUSTOMER TOTAL                                                                    941.68
+                                                                            ------------
+EJANASEVANA MEDICINES KUNNAMKULAMF
+ 6488    03-05-2025 MEBICLOR-SR 10 S        MSR-0524Apr-26  107.14     5          535.70
+
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 9
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                    535.70
+                                                                            ------------
+ENOVEL MEDICALS MUNDATHICODEF
+ 8159    13-05-2025 MOXIUM 625 10 S         TAXCB406Oct-26  128.57    30     6   3857.10
+ 11573   30-05-2025 PRO-BA CAPS 10 S        CB-11240Oct-26   75.00    20     4   1500.00
+ 11573   30-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    50    10   1785.50
+                                                                            ------------
+CUSTOMER TOTAL                                                                   7142.60
+                                                                            ------------
+ENEETHI MEDICALS -NO-1 KATTOORF
+ 10581   24-05-2025 MULTIBEETA CAP 10 S     DF250168Sep-26   74.58     5          372.90
+ 8994    16-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86    10          328.60
+ 10581   24-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10          357.10
+ 11188   28-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    30     3   1071.30
+ 11188   28-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     7          465.01
+ 11188   28-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     3          199.29
+                                                                            ------------
+CUSTOMER TOTAL                                                                   2794.20
+                                                                            ------------
+EMAYOORA MEDICALS CHERPUF
+ 8545    15-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     5          160.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    160.70
+                                                                            ------------
+ENEETHI MEDICALS CHERPUF
+ 8520    14-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     5          117.85
+ 8520    14-05-2025 CITRA PLUS LIQ. 100 ML  241655  Sep-26   57.14     3          171.42
+ 8520    14-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     5          164.30
+ 8520    14-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     4          220.00
+ 8520    14-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     6          330.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1003.57
+                                                                            ------------
+EERINJERI MEDICALS KOORKANCHERYF
+ 9882    21-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     3           70.71
+                                                                            ------------
+CUSTOMER TOTAL                                                                     70.71
+                                                                            ------------
+EGOLDWIN MEDICALS MATTAMF
+ 9005    16-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     5          275.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    275.00
+                                                                            ------------
+ENEETHI MEDICAL STORE NO-5 IRINJALAKUDAF
+ 7283    08-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10          357.10
+                                                                            ------------
+CUSTOMER TOTAL                                                                    357.10
+                                                                            ------------
+ENEETHI MEDICAL STORES NADATHARAF
+ 7968    12-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29    10          392.90
+                                                                            ------------
+CUSTOMER TOTAL                                                                    392.90
+                                                                            ------------
+ENEETHI MEDICALS NO.2  SCB141 KALLETTUMKARAF
+ 7296    09-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    10          235.70
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 10
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                    235.70
+                                                                            ------------
+ENEETHI MEDICAL STORES TSCB 4140 M.G KAVUF
+ 8435    14-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14    10          321.40
+                                                                            ------------
+CUSTOMER TOTAL                                                                    321.40
+                                                                            ------------
+ENEETHI MEDICAL STORE MCH VSCB M.G KAVUF
+ 11163   28-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0225Jul-26   32.14     3           96.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                     96.42
+                                                                            ------------
+ERELIEF MEDICALS KOORKENCHERYF
+ 8052    13-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     1           23.57
+ 10033   22-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     2           47.14
+ 6211    02-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     1           32.14
+ 7010    08-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     1           32.14
+ 8592    15-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     1           32.14
+ 10033   22-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     3           96.42
+ 11708   31-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     1           32.14
+ 10033   22-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     1           14.29
+ 10852   27-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     3           42.87
+ 7010    08-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     1           32.86
+ 8592    15-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     1           32.86
+ 10033   22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+ 10033   22-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     2          135.72
+ 8052    13-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     1           55.00
+ 10033   22-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     1           55.00
+ 10852   27-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     2          110.00
+ 7628    10-05-2025 SHIRCAL 15 S            ST24-293Sep-26   41.43     6          248.58
+ 7641    10-05-2025 SHIRCAL 15 S            ST24-293Sep-26   41.43     5          207.15
+ 7810    12-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     1           21.43
+ 10033   22-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     1           21.43
+ 10852   27-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     1           21.43
+ 11708   31-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     2           42.86
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1402.89
+                                                                            ------------
+EJANANEETHI   MEDICALS IRINJALAKUDAF
+ 6605    03-05-2025 BESILENT COUGH SYP 100M CS-09241Aug-26   60.71     2          121.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                    121.42
+                                                                            ------------
+EUSHA  MEDICLINIC KECHERYF
+ 10246   23-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     3          203.58
+ 6309    02-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     2          110.00
+ 6309    02-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     8          440.00
+ 7068    08-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00    10          550.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1303.58
+                                                                            ------------
+ERELIEF MEDICALS PATTURAIKKALF
+ 6052    01-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     3           70.71
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 11
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 11480   30-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     2           47.14
+ 10680   26-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     1           32.86
+ 11480   30-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                    249.29
+                                                                            ------------
+EGREEN MEDICALS PERINGAVUF
+ 7008    08-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     2           42.86
+ 7802    12-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     2           42.86
+ 9515    20-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     2           42.86
+ 9999    22-05-2025 CLONIR 0.5MG 10 S       CPT-1224Nov-26   21.43     2           42.86
+ 9067    17-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+ 8570    15-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     2           71.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                    305.71
+                                                                            ------------
+ERELIEF MEDICALS EASTFORTF
+ 10528   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                     98.58
+                                                                            ------------
+ECITYCARE MEDICALS CHAVAKKADF
+ 10998   27-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     4           94.28
+                                                                            ------------
+CUSTOMER TOTAL                                                                     94.28
+                                                                            ------------
+EJANASEVANA PHARMACRUTICALS KUNNAMKULAMF
+ 8559    15-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     5          160.70
+                                                                            ------------
+CUSTOMER TOTAL                                                                    160.70
+                                                                            ------------
+EMEDICARE MEDICALS KARUMATHRAF
+ 10116   22-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+                                                                            ------------
+CUSTOMER TOTAL                                                                     62.85
+                                                                            ------------
+ERELIEF MEDICALS IRINJALAKUDAF
+ 6029    01-05-2025 BESILENT COUGH SYP 100M CS-09241Aug-26   60.71     2          121.42
+ 6504    03-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     1           23.57
+ 6504    03-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     2           64.28
+ 7561    09-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     1           32.14
+ 11042   28-05-2025 CONGO TAB 10 S          LXT-0524Apr-26   32.14     1           32.14
+ 7096    08-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+ 10008   22-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+ 9521    20-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     1           14.29
+ 6188    02-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43     2          142.86
+ 6504    03-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43     1           71.43
+ 8053    13-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43     1           71.43
+ 9521    20-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     3          214.29
+ 10008   22-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     4          285.72
+ 11698   31-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     3          214.29
+ 10008   22-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     1           67.86
+ 7096    08-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71     5          178.55
+
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 12
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 6029    01-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     1           66.43
+ 6989    08-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     5          332.15
+ 7096    08-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     5          332.15
+ 9298    19-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     3          199.29
+ 9831    21-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     4          265.72
+ 9833    21-05-2025 SITAJUST M 10 S         TB-01253Dec-26   63.57     5          317.85
+ 6029    01-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     2          135.72
+ 6504    03-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     1           67.86
+ 7561    09-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     2          135.72
+ 8053    13-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     1           67.86
+ 9113    17-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     1           67.86
+ 9831    21-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     1           67.86
+ 10008   22-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     2          135.72
+ 11042   28-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     2          135.72
+                                                                            ------------
+CUSTOMER TOTAL                                                                   3987.88
+                                                                            ------------
+ERELIEF MEDICALS POONKUNNAMF
+ 6253    02-05-2025 ATOSTAR 10MG 10 S       AVT-1124Oct-26   35.00     3          105.00
+ 6501    03-05-2025 ATOSTAR 10MG 10 S       AVT-1124Oct-26   35.00     1           35.00
+ 6518    03-05-2025 ATOSTAR 10MG 10 S       AVT-1124Oct-26   35.00    10          350.00
+ 11476   30-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     3           70.71
+ 11271   29-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14     3           96.42
+ 11271   29-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29     3          117.87
+ 7816    12-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     1           55.00
+ 9299    19-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     1           55.00
+ 11271   29-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     4          220.00
+ 11703   31-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     3           64.29
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1169.29
+                                                                            ------------
+ESATHYA MEDICALS THIROORF
+ 11823   31-05-2025 BESILENT COUGH SYP 100M CS-01250Dec-26   60.71     5     1    303.55
+ 11823   31-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     3          203.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                    507.13
+                                                                            ------------
+EJANATHA MEDICALS CHATHANURF
+ 11470   30-05-2025 GLIMSE-M1 10 S          ST25-037Jan-27   32.14    10     2    321.40
+ 11470   30-05-2025 RAPPIT 20MG 10 S        TFT155A May-26   35.71    10     2    357.10
+ 11470   30-05-2025 SHIRCAL 15 S            ST24-293Sep-26   41.43     5     1    207.15
+                                                                            ------------
+CUSTOMER TOTAL                                                                    885.65
+                                                                            ------------
+EKALOOR SEVANA MEDICINE KALOORF
+ 10226   23-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     2           65.72
+                                                                            ------------
+CUSTOMER TOTAL                                                                     65.72
+                                                                            ------------
+EAMBALAMUKKU SEVANA MEDICIN T.V.MF
+ 6137    01-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     1           32.14
+ 7091    08-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     3           96.42
+ 10480   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     5          164.30
+
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 13
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 9124    17-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     2          132.86
+                                                                            ------------
+CUSTOMER TOTAL                                                                    425.72
+                                                                            ------------
+EANKAMALY SEVANA MEDICINES ANKAMALYF
+ 10542   24-05-2025 PRO-BA CAPS 10 S        CB-11240Oct-26   75.00     3          225.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    225.00
+                                                                            ------------
+ECHANGANASSERY SEVANA MEDICALS CHANGANASSERYF
+ 6651    03-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     2          263.62
+ 10120   22-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     2          263.62
+                                                                            ------------
+CUSTOMER TOTAL                                                                    527.24
+                                                                            ------------
+EKESAVADASAPURAM SEVANA MEDICINS T.V.MF
+ 10015   22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     7          230.02
+                                                                            ------------
+CUSTOMER TOTAL                                                                    230.02
+                                                                            ------------
+EKILLIPALAM SEVANA MEDICINES T.V.MF
+ 10134   22-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86    10          328.60
+ 10490   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86    11          361.46
+ 10490   24-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     1           67.86
+ 10865   27-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     2          132.86
+                                                                            ------------
+CUSTOMER TOTAL                                                                    890.78
+                                                                            ------------
+EKOLLAM SEVANA MEDICINS KOLLAMF
+ 10025   22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     7          230.02
+ 10491   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     3           98.58
+ 8149    13-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     1           21.43
+                                                                            ------------
+CUSTOMER TOTAL                                                                    350.03
+                                                                            ------------
+EMADANNADA SEVANA MEDICINS KOLLAMF
+ 6521    03-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     3           64.29
+ 9158    17-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     1           21.43
+                                                                            ------------
+CUSTOMER TOTAL                                                                     85.72
+                                                                            ------------
+EMANAKKAD SEVANA MEDICINES TRIVANDRUMF
+ 9163    17-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+ 9612    20-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     6          197.16
+ 10086   22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+ 10086   22-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     2           65.72
+ 9163    17-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     2          132.86
+                                                                            ------------
+CUSTOMER TOTAL                                                                    527.18
+                                                                            ------------
+EPAZHAVANANGADI  SEVANA T.V.MF
+ 9152    17-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     1           66.43
+                                                                            ------------
+CUSTOMER TOTAL                                                                     66.43
+                                                                            ------------
+ESEVANA MEDICINES PERURKADA PERURKADAF
+ 6595    03-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     2           64.28
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 14
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 7166    08-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     3           96.42
+ 8601    15-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14     1           32.14
+ 8065    13-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     4           57.16
+ 8601    15-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     4           57.16
+ 10871   27-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     3           42.87
+ 10022   22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     9          295.74
+ 10472   24-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     7          465.01
+                                                                            ------------
+CUSTOMER TOTAL                                                                   1110.78
+                                                                            ------------
+ETRAFFIC JUNCTION THIRUVALLA SEVANA THIRUVALLAF
+ 10078   22-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+                                                                            ------------
+CUSTOMER TOTAL                                                                     65.72
+                                                                            ------------
+ETRIVANDRUM SEVANA MEDICINS TRIVANDRUMF
+ 9120    17-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     3           42.87
+                                                                            ------------
+CUSTOMER TOTAL                                                                     42.87
+                                                                            ------------
+EULLOOR SEVANA MEDICINES TRIVANDRUMF
+ 9568    20-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     3           98.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                     98.58
+                                                                            ------------
+EWESTFORT SEVANA PHARMA THRISSURF
+ 11352   29-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     1           21.43
+                                                                            ------------
+CUSTOMER TOTAL                                                                     21.43
+                                                                            ------------
+EMCR SEVANA MEDICINES CHANGANASSERYF
+ 10079   22-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     1           67.86
+                                                                            ------------
+CUSTOMER TOTAL                                                                     67.86
+                                                                            ------------
+ERELIEF MEDICALS KOTTAKKALF
+ 10656   26-05-2025 GLIMSE-M2 10 S          ST25-008Dec-26   39.29     2           78.58
+                                                                            ------------
+CUSTOMER TOTAL                                                                     78.58
+                                                                            ------------
+ENEETHI MEDICALS NO1 MOONUPEEDIKA(BEACH ROAD)F
+ 6123    01-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     6          141.42
+                                                                            ------------
+CUSTOMER TOTAL                                                                    141.42
+                                                                            ------------
+ERELIEF MEDICALS WADAKKANCHERYF
+ 8322    14-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     7          385.00
+ 8815    16-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     4          220.00
+ 9529    20-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00     3          165.00
+ 10697   26-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     2           42.86
+ 7065    08-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76     3          914.28
+ 10690   26-05-2025 UDIZIA-300 TAB 10 S     EAT033  Dec-26  304.76     6         1828.56
+                                                                            ------------
+CUSTOMER TOTAL                                                                   3555.70
+                                                                            ------------
+EKERALA BRANDED GENERIC MEDICALS THRISSURF
+ 11785   31-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86     3           98.58
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 15
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+                                                                            ------------
+CUSTOMER TOTAL                                                                     98.58
+                                                                            ------------
+EDR.A.M.FAIRPRICE MEDICINES OLLURF
+ 10549   24-05-2025 ATOSTAR 10MG 10 S       AVT-1124Oct-26   35.00    20     4    700.00
+ 10549   24-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    30     6    707.10
+ 10549   24-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14    10     2    321.40
+ 10549   24-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43    20     4   1428.60
+ 10549   24-05-2025 MULTIBEETA CAP 10 S     DF250168Sep-26   74.58    50    10   3729.00
+ 10549   24-05-2025 NOANXIUM-FP 10 S        DT250098Dec-26   32.86    40     8   1314.40
+ 10549   24-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86    10     2    678.60
+ 10549   24-05-2025 RAPPIT D CAP 10 S       TGT368B Jun-26   55.00    40     8   2200.00
+ 10549   24-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43    20     4   1328.60
+ 10549   24-05-2025 SHIRCAL 15 S            ST24-293Sep-26   41.43    80    16   3314.40
+ 10549   24-05-2025 SIMETHIUM SOFTGEL CAPS  ALD5018 Dec-26   50.00    30     6   1500.00
+ 10549   24-05-2025 SITAJUST 10 S           TB-01253Dec-26   55.00    20     4   1100.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                  18322.10
+                                                                            ------------
+EDOCTORS PHARMACY AYYANTHOLEF
+ 7361    09-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     2          263.62
+ 10603   24-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     2          263.62
+ 11813   31-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     2          263.62
+                                                                            ------------
+CUSTOMER TOTAL                                                                    790.86
+                                                                            ------------
+EOL RELIEF MEDICALS LLP OLARIKKARAF
+ 9387    19-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     5          117.85
+                                                                            ------------
+CUSTOMER TOTAL                                                                    117.85
+                                                                            ------------
+ERELIEF MEDICALS IRINJALAKKUDA-2F
+ 10641   26-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     2           47.14
+ 9886    21-05-2025 CONLOSS SOLUTION 150 ML 24S1GLA1Nov-26  131.81     3          395.43
+ 10641   26-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+ 6049    01-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43     3          214.29
+ 6513    03-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43     3          214.29
+ 7806    12-05-2025 LESSI-M TAB 10 S        MLT-0824Jul-26   71.43     1           71.43
+ 10641   26-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     3          214.29
+ 6049    01-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     2           65.72
+ 6195    02-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     1           32.86
+ 6513    03-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     1           32.86
+ 7006    08-05-2025 NOANXIUM-FP 10 S        DT241346Aug-26   32.86     3           98.58
+ 10641   26-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     1           67.86
+ 11689   31-05-2025 PILEGUARD CREAM 30GM    164     Nov-26   67.86     1           67.86
+ 6710    05-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     1           66.43
+ 7006    08-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     2          132.86
+ 7806    12-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     1           66.43
+ 10641   26-05-2025 RAPPIT-DSR 10 S         RDC-1224Nov-26   66.43     4          265.72
+ 7006    08-05-2025 SITAJUST M 10 S         TB-01253Dec-26   63.57     1           63.57
+ 9085    17-05-2025 SITAJUST M 10 S         TB-01253Dec-26   63.57     3          190.71
+ 10641   26-05-2025 SITAJUST M 10 S         TB-12533Dec-26   63.57     4          254.28
+ 11689   31-05-2025 SITAJUST M 10 S         TB-12533Dec-26   63.57     3          190.71
+
+
+
+
+
+
+
+
+
+
+
+
+U S PHARMA
+CUSTOMERWISE SALES REPORT FROM 01-05-2025 TO 31-05-2025                      PAGE NO : 16
+COMPANY :- SHIRR PHARMACEUTICALS PVT LTD
+----------------------------------------------------------------------------------------
+BILLNO      DATE      ITEMNAME            BATCHNO  EXPIRY   PTR       QUANTITY     VALUE
+                                                                    NFREE   FREE        
+----------------------------------------------------------------------------------------
+ 10641   26-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     4           85.72
+ 11689   31-05-2025 STOPRAX-10 10 S         HZT-0624May-26   21.43     2           42.86
+ 6710    05-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     1           67.86
+ 7006    08-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     1           67.86
+ 9532    20-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     2          135.72
+ 10641   26-05-2025 VOLIMEN GEL 30GM        K069    Sep-26   67.86     2          135.72
+                                                                            ------------
+CUSTOMER TOTAL                                                                   3351.91
+                                                                            ------------
+EDAYA ROYAL HOSPITAL &TRAUMA CENTRE KUNNAMKULAMF
+ 8992    16-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    10          235.70
+ 10395   23-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57    10          235.70
+ 6431    02-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0924Feb-26   32.14    20          642.80
+ 8639    15-05-2025 INDOBEST-25 CAPS. 10 S  IMC-0225Jul-26   32.14    30          964.20
+                                                                            ------------
+CUSTOMER TOTAL                                                                   2078.40
+                                                                            ------------
+ECLD RELIEF MEDICALS CHALAKUDYF
+ 10457   24-05-2025 CIBIRIV TAB 10 S        AXT-0325Feb-27   23.57     1           23.57
+ 11034   28-05-2025 DIGEFAST SYP 200ML      FES-1124Jan-26   62.85     1           62.85
+ 10630   26-05-2025 LESSI TAB 10 S          LCT-1124Oct-26   14.29     2           28.58
+ 10457   24-05-2025 LESSI-M TAB 10 S        MLT-0225Jan-27   71.43     3          214.29
+                                                                            ------------
+CUSTOMER TOTAL                                                                    329.29
+                                                                            ------------
+EWELCARE MEDICALS VENKIDANGU..F
+ 6562    03-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     5          275.00
+ 6594    03-05-2025 RAPPIT D CAP 10 S       TGT368B Aug-26   55.00     1           55.00
+                                                                            ------------
+CUSTOMER TOTAL                                                                    330.00
+                                                                            ------------
+GRAND TOTAL                                                                    152640.98
+                                                                            ============
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
