@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 import re
 try:
-    import fitz 
+    import fitz  # PyMuPDF
 except ImportError:
     fitz = None
 import os
@@ -14,7 +14,7 @@ def parse_txt_sales_report(file_path):
     """
     customer_pattern = re.compile(r"^\x1bE?(.+?)\x1bF$")
     data_pattern = re.compile(
-        r"^\s*(\d+)\s+"                      # BILLNO
+        r"^\s*(\d+)\s+"                       # BILLNO
         r"(\d{2}-\d{2}-\d{4})\s+"            # DATE
         r"(.+?)\s{2,}"                       # ITEMNAME
         r"(.+?)"                             # BATCHNO
@@ -130,9 +130,10 @@ def parse_pdf_sales_report(pdf_path):
                 ItemName = lines[i]
                 date_raw = lines[i+1]
                 
+                # Convert DD/MM/YY to DD/MM/YYYY for consistency
                 if re.match(r"^\d{2}/\d{2}/\d{2}$", date_raw):
                     day, month, year = date_raw.split('/')
-
+                    # Assume years 00-30 are 2000s, 31-99 are 1900s
                     full_year = f"20{year}" if int(year) <= 30 else f"19{year}"
                     date = f"{day}/{month}/{full_year}"
                 else:
