@@ -12,7 +12,6 @@ import {
 } from "chart.js";
 import { ChevronDown } from "lucide-react";
 
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,36 +22,19 @@ ChartJS.register(
   Legend
 );
 
-const SalesReportCard = () => {
+const SalesReportCard = ({ reportData = {} }) => {
   const [activeTab, setActiveTab] = useState("Yearly");
   const [chartType, setChartType] = useState("Bar");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
- 
-  const reportData = {
-    Yearly: {
-      title: "Yearly Sales: ₹12.4M",
-      data: [2.1, 3.2, 2.8, 4.1, 3.7, 4.5, 3.9, 4.2, 3.6, 4.8, 4.3, 5.1],
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      color: "#3B82F6"
-    },
-    Monthly: {
-      title: "Monthly Sales: ₹1.1M",
-      data: [150, 280, 320, 180, 420, 380, 290, 350, 410, 320, 380, 450, 390, 420, 380, 460, 410, 490, 430, 480, 520, 490, 530, 510, 540, 520, 580, 560, 590, 570],
-      labels: Array.from({length: 30}, (_, i) => i + 1),
-      color: "#10B981"
-    },
-    Weekly: {
-      title: "Weekly Sales: ₹245K",
-      data: [35, 42, 38, 45, 41, 39, 44],
-      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      color: "#F59E0B"
-    },
-  };
-
   const chartTypes = ["Bar", "Line"];
-
-  const currentData = reportData[activeTab];
+  
+  const currentData = reportData[activeTab] || {
+    title: "Loading...",
+    data: [],
+    labels: [],
+    color: "#cccccc",
+  };
 
   const chartData = {
     labels: currentData.labels,
@@ -77,81 +59,44 @@ const SalesReportCard = () => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
-        display: false,
-      },
+      legend: { display: false },
       tooltip: {
         enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
-        titleColor: "white",
-        bodyColor: "white",
-        cornerRadius: 8,
         callbacks: {
-          label: (context) => `Sales: ₹${context.parsed.y}${activeTab === 'Yearly' ? 'M' : activeTab === 'Monthly' ? 'K' : 'K'}`,
+          label: (context) => `Sales: ₹${context.parsed.y}${activeTab === 'Yearly' ? 'M' : 'K'}`,
         },
       },
     },
     scales: {
-      x: {
-        display: true,
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: "#6B7280",
-          font: {
-            size: 10,
-          },
-          maxTicksLimit: activeTab === "Monthly" ? 10 : undefined,
-        },
-      },
+      x: { display: true, grid: { display: false } },
       y: {
         display: true,
-        grid: {
-          color: "#F3F4F6",
-          drawBorder: false,
-        },
+        grid: { color: "#F3F4F6" },
         ticks: {
-          color: "#6B7280",
-          font: {
-            size: 10,
-          },
           callback: (value) => `₹${value}${activeTab === 'Yearly' ? 'M' : 'K'}`,
         },
       },
     },
-    interaction: {
-      intersect: false,
-      mode: 'index',
-    },
+    interaction: { intersect: false, mode: 'index' },
   };
 
   return (
     <div className="bg-white rounded-[40px] p-6 shadow-md w-full">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold text-gray-800">Sales Report</h2>
-    
         <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium"
           >
             {chartType} Chart
             <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
           </button>
-          
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg z-10">
               {chartTypes.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => {
-                    setChartType(type);
-                    setDropdownOpen(false);
-                  }}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg ${
-                    chartType === type ? "bg-blue-50 text-orange-600 font-medium" : "text-gray-700"
-                  }`}
+                <button key={type} onClick={() => { setChartType(type); setDropdownOpen(false); }}
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${chartType === type ? "font-medium text-blue-600" : ""}`}
                 >
                   {type} Chart
                 </button>
@@ -160,62 +105,29 @@ const SalesReportCard = () => {
           )}
         </div>
       </div>
-
       <div className="flex gap-2 mb-6">
-        {Object.keys(reportData).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeTab === tab
-                ? "bg-black text-white"
-                : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-            }`}
+        {Object.keys(reportData).length > 0 ? Object.keys(reportData).map((tab) => (
+          <button key={tab} onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === tab ? "bg-black text-white" : "bg-gray-200 text-gray-600 hover:bg-gray-300"}`}
           >
             {tab}
           </button>
-        ))}
+        )) : <p className="text-sm text-gray-500">Loading timeframes...</p>}
       </div>
-
       <div className="mb-2">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">
-          {currentData.title}
-        </h3>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{currentData.title}</h3>
         <p className="text-sm text-gray-500">
           {activeTab === "Yearly" && "Performance across 12 months"}
           {activeTab === "Monthly" && "Daily performance this month"}
-          {activeTab === "Weekly" && "Performance across 7 days"}
+          {activeTab === "Weekly" && "Performance in the last 7 days"}
         </p>
       </div>
-
-      <div className="h-30 w-full">
-        {chartType === "Bar" ? (
-          <Bar data={chartData} options={chartOptions} />
+      <div className="h-60 w-full">
+        {currentData.data.length > 0 ? (
+          chartType === "Bar" ? <Bar data={chartData} options={chartOptions} /> : <Line data={chartData} options={chartOptions} />
         ) : (
-          <Line data={chartData} options={chartOptions} />
+          <div className="flex items-center justify-center h-full text-gray-500">No data for this period</div>
         )}
-      </div>
-
-      <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Average</p>
-          <p className="text-sm font-semibold text-gray-800">
-            ₹{(currentData.data.reduce((a, b) => a + b, 0) / currentData.data.length).toFixed(1)}
-            {activeTab === 'Yearly' ? 'M' : 'K'}
-          </p>
-        </div>
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Highest</p>
-          <p className="text-sm font-semibold text-gray-800">
-            ₹{Math.max(...currentData.data)}{activeTab === 'Yearly' ? 'M' : 'K'}
-          </p>
-        </div>
-        <div className="text-center">
-          <p className="text-xs text-gray-500">Lowest</p>
-          <p className="text-sm font-semibold text-gray-800">
-            ₹{Math.min(...currentData.data)}{activeTab === 'Yearly' ? 'M' : 'K'}
-          </p>
-        </div>
       </div>
     </div>
   );
