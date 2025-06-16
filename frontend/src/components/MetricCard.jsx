@@ -1,4 +1,4 @@
-// components/MetricCard.jsx
+
 import React from "react";
 import SparkBar from "./SparkBar";
 import { MoveUp, MoveDown } from "lucide-react";

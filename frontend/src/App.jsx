@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidenav from './components/Sidenav';
 import Dashboard from './Pages/Dashboard';
 import Analytics from './Pages/Analytics';
+import  Report from './Pages/ReportUploadPage'
 
 export default function App() {
   return (
@@ -15,8 +16,9 @@ export default function App() {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/report" element={<Report/>}/>
 
-          <Route path="*" element={<h2>Page not found</h2>} />
+          <Route path="*" element={<h2>Page On Working</h2>} />
         </Routes>
       </main>
     </div>

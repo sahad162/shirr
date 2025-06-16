@@ -31,8 +31,8 @@ function Header() {
             className="w-8 h-8 rounded-full object-cover"
           />
           <div className="flex flex-col leading-tight">
-            <span className="text-sm font-medium text-gray-900">Brooklyn Simmons</span>
-            <span className="text-xs text-gray-500">brooklyn.simmons@gmail.com</span>
+            <span className="text-sm font-medium text-gray-900">Demo User</span>
+            <span className="text-xs text-gray-500">Demo.User@gmail.com</span>
           </div>
           <ChevronDown className="w-4 h-4 text-gray-600" />
         </div>

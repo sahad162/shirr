@@ -15,8 +15,8 @@ import {
 
 const mainNav = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-  { label: "Upload Report", icon: UploadCloud, path: "/upload" },
-  { label: "View Reports", icon: FileText, path: "/reports" },
+  { label: "Upload Report", icon: UploadCloud, path: "/report" },
+  { label: "View Reports", icon: FileText, path: "/view" },
   { label: "Analytics", icon: BarChart, path: "/analytics" },
   { label: "Patients", icon: Users, path: "/patients" },
   { label: "Doctors", icon: Stethoscope, path: "/doctors" },
