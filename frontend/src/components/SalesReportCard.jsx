@@ -1,4 +1,6 @@
-import { useState } from "react";
+// src/components/SalesReportCard.jsx
+
+import { useState, useEffect } from "react"; // <-- Import useEffect
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -23,12 +25,22 @@ ChartJS.register(
 );
 
 const SalesReportCard = ({ reportData = {} }) => {
-  const [activeTab, setActiveTab] = useState("Yearly");
+  const [activeTab, setActiveTab] = useState(""); // <-- Start with empty string
   const [chartType, setChartType] = useState("Bar");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // --- NEW: Make the component smarter ---
+  // When data arrives, set the active tab to the first available one.
+  useEffect(() => {
+    const availableTabs = Object.keys(reportData);
+    if (availableTabs.length > 0 && !activeTab) {
+      setActiveTab(availableTabs[0]);
+    }
+  }, [reportData, activeTab]);
+
   const chartTypes = ["Bar", "Line"];
   
+  // Use optional chaining for safety in case data is still loading
   const currentData = reportData[activeTab] || {
     title: "Loading...",
     data: [],
@@ -63,7 +75,7 @@ const SalesReportCard = ({ reportData = {} }) => {
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (context) => `Sales: ₹${context.parsed.y}${activeTab === 'Yearly' ? 'M' : 'K'}`,
+          label: (context) => `Sales: ${new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y)}`,
         },
       },
     },
@@ -73,7 +85,7 @@ const SalesReportCard = ({ reportData = {} }) => {
         display: true,
         grid: { color: "#F3F4F6" },
         ticks: {
-          callback: (value) => `₹${value}${activeTab === 'Yearly' ? 'M' : 'K'}`,
+          callback: (value) => `₹${value >= 1000 ? `${value / 1000}K` : value}`,
         },
       },
     },
@@ -117,13 +129,14 @@ const SalesReportCard = ({ reportData = {} }) => {
       <div className="mb-2">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">{currentData.title}</h3>
         <p className="text-sm text-gray-500">
-          {activeTab === "Yearly" && "Performance across 12 months"}
+          {activeTab === "Yearly" && "Performance across all months this year"}
           {activeTab === "Monthly" && "Daily performance this month"}
-          {activeTab === "Weekly" && "Performance in the last 7 days"}
+          {activeTab === "Weekly" && "Performance in the last 4 weeks"}
         </p>
       </div>
       <div className="h-60 w-full">
-        {currentData.data.length > 0 ? (
+        {/* Use optional chaining for safety */}
+        {currentData?.data?.length > 0 ? (
           chartType === "Bar" ? <Bar data={chartData} options={chartOptions} /> : <Line data={chartData} options={chartOptions} />
         ) : (
           <div className="flex items-center justify-center h-full text-gray-500">No data for this period</div>

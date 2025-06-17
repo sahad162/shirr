@@ -1,7 +1,5 @@
 # views.py
 
-# views.py
-
 import pandas as pd
 from django.db import transaction
 from django.http import JsonResponse
@@ -63,6 +61,106 @@ def clear_data_view(request):
 
 # --- Analytics Helper Functions ---
 
+# NEW: Helper for Dashboard.jsx KPIs
+
+# NEW: A helper to format currency for the chart titles
+def format_currency(value):
+    if value >= 1_000_000:
+        return f"₹{(value / 1_000_000):.1f}M"
+    if value >= 1_000:
+        return f"₹{(value / 1_000):.1f}K"
+    return f"₹{value:.0f}"
+
+def _get_kpi_metrics(df):
+    if df.empty:
+        return {
+            'totalSales': 0, 'totalProducts': 0, 'totalStockists': 0, 'totalOrders': 0,
+            'salesChangePercentage': 0
+        }
+
+    # Calculate main totals
+    kpis = {
+        'totalSales': df['value'].sum(),
+        'totalProducts': df['item_name'].nunique(),
+        'totalStockists': df['customer_name'].nunique(),
+        'totalOrders': df['bill_no'].nunique(),
+        'salesChangePercentage': 0  # Default value if no comparison is possible
+    }
+
+    # Calculate Week-over-Week change for the 'Total Sales' metric card
+    df_copy = df.copy()
+    df_copy['week'] = df_copy['date'].dt.to_period('W')
+    weekly_sales = df_copy.groupby('week')['value'].sum().sort_index()
+
+    # We need at least two weeks of data to calculate a change
+    if len(weekly_sales) >= 2:
+        last_week_sales = weekly_sales.iloc[-1]
+        prev_week_sales = weekly_sales.iloc[-2]
+        
+        if prev_week_sales > 0:
+            change = ((last_week_sales - prev_week_sales) / prev_week_sales) * 100
+            kpis['salesChangePercentage'] = round(change, 1)
+        elif last_week_sales > 0:
+            # If previous week was 0, any sales is a 100% increase for simplicity
+            kpis['salesChangePercentage'] = 100.0
+
+    return kpis
+
+# MODIFIED: Helper for Dashboard.jsx SalesReportCard to be more robust
+def _get_sales_report_summary(df):
+    if df.empty:
+        # Return an empty dict, the frontend will handle it
+        return {}
+
+    output_data = {}
+    latest_date = df['date'].max()
+
+    # --- 1. Weekly Data (Last 4 weeks) ---
+    df_copy = df.copy()
+    df_copy['week'] = df_copy['date'].dt.to_period('W')
+    weekly_sales = df_copy.groupby('week')['value'].sum().sort_index().tail(4) # Get last 4 weeks
+    
+    if not weekly_sales.empty:
+        output_data['Weekly'] = {
+            'title': format_currency(weekly_sales.sum()),
+            'labels': weekly_sales.index.map(lambda p: p.start_time.strftime('%b %d')).tolist(),
+            'data': [round(v, 2) for v in weekly_sales.values],
+            'color': '#3b82f6',  # Blue
+        }
+
+    # --- 2. Monthly Data (Days of the latest month) ---
+    monthly_df = df[(df['date'].dt.year == latest_date.year) & (df['date'].dt.month == latest_date.month)]
+    if not monthly_df.empty:
+        daily_sales = monthly_df.groupby(df['date'].dt.day)['value'].sum().sort_index()
+        output_data['Monthly'] = {
+            'title': format_currency(daily_sales.sum()),
+            'labels': daily_sales.index.tolist(),
+            'data': [round(v, 2) for v in daily_sales.values],
+            'color': '#10b981',  # Green
+        }
+        
+    # --- 3. Yearly Data (Months of the latest year) ---
+    yearly_df = df[df['date'].dt.year == latest_date.year]
+    if not yearly_df.empty:
+        monthly_sales_of_year = yearly_df.groupby(df['date'].dt.to_period('M'))['value'].sum().sort_index()
+        output_data['Yearly'] = {
+            'title': format_currency(monthly_sales_of_year.sum()),
+            'labels': monthly_sales_of_year.index.map(lambda p: p.strftime('%b')).tolist(),
+            'data': [round(v, 2) for v in monthly_sales_of_year.values],
+            'color': '#8b5cf6', # Purple
+        }
+
+    return output_data
+
+# NEW: Helper for Dashboard.jsx TopStockistCard
+def _get_revenue_by_area(df):
+    if df.empty or 'area' not in df.columns:
+        return []
+    revenue = df.groupby('area')['value'].sum().sort_values(ascending=False).round(2)
+    return [{'name': area, 'revenue': value} for area, value in revenue.items()]
+
+
+
 def _get_sales_trends_by_area(df):
     if df.empty or 'area' not in df.columns: return {}
     df_copy = df.copy()
@@ -88,26 +186,18 @@ def _get_top_medicines_by_area(df, top_n=10):
     return chart_data
 
 def _get_growing_medicines(df):
-    # Changed to weekly analysis since we only have one month of data
     if df.empty or df['date'].dt.to_period('W').nunique() < 2:
         return {'labels': [], 'prev_month_sales': [], 'last_month_sales': []}
-
-    # Group by item and week instead of month
     sales = df.groupby(['item_name', df['date'].dt.to_period('W')])['value'].sum().unstack(fill_value=0).sort_index(axis=1)
     if sales.shape[1] < 2:
         return {'labels': [], 'prev_month_sales': [], 'last_month_sales': []}
-
-    # Compare last two weeks instead of months
     last_week_col, prev_week_col = sales.columns[-1], sales.columns[-2]
     growing = sales[sales[last_week_col] > sales[prev_week_col]].copy()
     growing.sort_values(by=last_week_col, ascending=False, inplace=True)
-
-    # Limit to top 10 for better visualization
     growing = growing.head(10)
-
     return {
         'labels': growing.index.tolist(),
-        'prev_month_sales': [round(v, 2) for v in growing[prev_week_col]],  # Keep same key names for frontend compatibility
+        'prev_month_sales': [round(v, 2) for v in growing[prev_week_col]],
         'last_month_sales': [round(v, 2) for v in growing[last_week_col]]
     }
 
@@ -121,52 +211,36 @@ def _get_high_free_quantity_products(df, top_n=15):
     if df.empty or 'free_quantity' not in df.columns or df['free_quantity'].sum() == 0:
         return {'labels': [], 'data': []}
     free_items = df.groupby('item_name')['free_quantity'].sum().nlargest(top_n)
-    # Filter out items with 0 free quantity
     free_items = free_items[free_items > 0]
     return {'labels': free_items.index.tolist(), 'data': [int(v) for v in free_items.values]}
 
-# REMOVED _get_medical_rep_performance as it's not needed
-
 def _get_weekly_growth_trends(df):
-    """
-    Calculate weekly growth trends for sales.
-    """
     if df.empty or df['date'].dt.to_period('W').nunique() < 2:
         return None
-
     df_copy = df.copy()
     df_copy['week'] = df_copy['date'].dt.to_period('W')
     weekly_sales = df_copy.groupby('week')['value'].sum().sort_index()
-
     if len(weekly_sales) < 2:
         return None
-
     growth_rates = weekly_sales.pct_change().fillna(0) * 100
-    
     return {
         'labels': [f"Week {i+1} vs Week {i}" for i in range(1, len(weekly_sales.index))],
-        'data': [round(v, 2) for v in growth_rates.values[1:]] # Skip the first value which is NaN/0
+        'data': [round(v, 2) for v in growth_rates.values[1:]]
     }
 
 def _get_area_performance_comparison(df):
-    """
-    Compare performance across different areas.
-    """
     if df.empty or 'area' not in df.columns:
         return None
-
     area_stats = df.groupby('area').agg({
         'value': 'sum',
         'bill_no': 'nunique'
     }).round(2).reset_index()
-
     return {
         'labels': area_stats['area'].tolist(),
         'totalSales': area_stats['value'].tolist(),
         'orderCount': area_stats['bill_no'].tolist()
     }
 
-# REMOVED _get_stockist_insights as it was unused
 
 # --- The Main API View for the Analytics Dashboard ---
 
@@ -179,16 +253,11 @@ def sales_data_api(request):
     df = pd.DataFrame.from_records(all_transactions)
     
     if df.empty:
-        # Return a valid empty structure so the frontend doesn't break
         return JsonResponse({
-            'totalRecords': 0,
-            'salesTrendsByArea': {},
-            'topMedicinesByArea': {},
-            'growingMedicines': {'labels': [], 'prev_month_sales': [], 'last_month_sales': []},
-            'prescriberAnalysis': {'labels': [], 'data': []},
-            'highFreeQuantity': {'labels': [], 'data': []},
-            'weeklyGrowthTrends': None,
-            'areaPerformance': None,
+            # ... (all other keys)
+            'kpiMetrics': {'totalSales': 0, 'totalProducts': 0, 'totalStockists': 0, 'totalOrders': 0, 'salesChangePercentage': 0},
+            'revenueByArea': [],
+            'salesReport': {}, # MODIFIED: Send an empty object
         })
         
     # --- Data Cleaning and Preparation ---
@@ -198,6 +267,7 @@ def sales_data_api(request):
 
     # --- Call all helper functions and combine results ---
     response_data = {
+        # ... (all other keys for both dashboards)
         'totalRecords': len(df),
         'salesTrendsByArea': _get_sales_trends_by_area(df),
         'topMedicinesByArea': _get_top_medicines_by_area(df),
@@ -206,11 +276,14 @@ def sales_data_api(request):
         'highFreeQuantity': _get_high_free_quantity_products(df),
         'weeklyGrowthTrends': _get_weekly_growth_trends(df),
         'areaPerformance': _get_area_performance_comparison(df),
+        'kpiMetrics': _get_kpi_metrics(df),
+        'revenueByArea': _get_revenue_by_area(df),
+        'salesReport': _get_sales_report_summary(df), # This now calls the rewritten function
     }
     
     return JsonResponse(response_data)
 
-
+# Make sure _get_kpi_metrics is also present in your file from the previous step.
 
 # part1 working on dashboard
 # import os

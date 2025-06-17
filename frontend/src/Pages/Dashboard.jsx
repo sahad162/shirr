@@ -1,3 +1,5 @@
+// src/pages/Dashboard.jsx
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import baseURL from "../Services/baseURL";
@@ -60,12 +62,20 @@ export default function Dashboard() {
     );
   }
 
+  // --- Dynamic Data Preparation ---
   const kpi = dashboardData?.kpiMetrics || {};
   const salesReport = dashboardData?.salesReport || {};
   const growingMedicines = dashboardData?.growingMedicines || {};
   const revenueByArea = dashboardData?.revenueByArea || [];
-  const salesSpark = [3, 5, 2, 6, 4, 3];
-  const productSpark = [2, 4, 3, 5, 4, 6];
+  
+  // Get sales change percentage from API response
+  const salesChange = kpi.salesChangePercentage || 0;
+  
+  // --- MODIFIED LINE ---
+  // Use the weekly sales data from the correct report structure for the sparkline chart
+  const salesSpark = salesReport?.Weekly?.data || [];
+  
+  const productSpark = [2, 4, 3, 5, 4, 6]; // This can remain hardcoded for now
 
   return (
     <div className="bg-gray-100 h-screen overflow-auto">
@@ -78,7 +88,9 @@ export default function Dashboard() {
                 icon={TrendingUp}
                 title="Total Sales"
                 value={formatCurrency(kpi.totalSales || 0)}
-                change={0.4} trend="down" sparkData={salesSpark}
+                change={Math.abs(salesChange)}
+                trend={salesChange >= 0 ? 'up' : 'down'}
+                sparkData={salesSpark}
               />
               <MetricCard
                 icon={Package}
