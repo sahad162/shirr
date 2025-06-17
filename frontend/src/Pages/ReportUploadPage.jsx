@@ -101,7 +101,7 @@ const ReportUploadPage = () => {
   try {
     const formData = new FormData();
     files.forEach((fileObj) => {
-      formData.append('reports', fileObj.file);
+      formData.append('file', fileObj.file);
     });
     formData.append('uploadedAt', new Date().toISOString());
     formData.append('userId', 'current-user-id');
