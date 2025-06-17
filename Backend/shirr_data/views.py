@@ -1,5 +1,7 @@
 # views.py
 
+# views.py
+
 import pandas as pd
 from django.db import transaction
 from django.http import JsonResponse
@@ -86,21 +88,27 @@ def _get_top_medicines_by_area(df, top_n=10):
     return chart_data
 
 def _get_growing_medicines(df):
-    if df.empty or df['date'].dt.to_period('M').nunique() < 2: 
+    # Changed to weekly analysis since we only have one month of data
+    if df.empty or df['date'].dt.to_period('W').nunique() < 2:
         return {'labels': [], 'prev_month_sales': [], 'last_month_sales': []}
-        
-    sales = df.groupby(['item_name', df['date'].dt.to_period('M')])['value'].sum().unstack(fill_value=0).sort_index(axis=1)
-    if sales.shape[1] < 2: 
+
+    # Group by item and week instead of month
+    sales = df.groupby(['item_name', df['date'].dt.to_period('W')])['value'].sum().unstack(fill_value=0).sort_index(axis=1)
+    if sales.shape[1] < 2:
         return {'labels': [], 'prev_month_sales': [], 'last_month_sales': []}
-        
-    last_month_col, prev_month_col = sales.columns[-1], sales.columns[-2]
-    growing = sales[sales[last_month_col] > sales[prev_month_col]].copy()
-    growing.sort_values(by=last_month_col, ascending=False, inplace=True)
-    
+
+    # Compare last two weeks instead of months
+    last_week_col, prev_week_col = sales.columns[-1], sales.columns[-2]
+    growing = sales[sales[last_week_col] > sales[prev_week_col]].copy()
+    growing.sort_values(by=last_week_col, ascending=False, inplace=True)
+
+    # Limit to top 10 for better visualization
+    growing = growing.head(10)
+
     return {
         'labels': growing.index.tolist(),
-        'prev_month_sales': [round(v, 2) for v in growing[prev_month_col]],
-        'last_month_sales': [round(v, 2) for v in growing[last_month_col]]
+        'prev_month_sales': [round(v, 2) for v in growing[prev_week_col]],  # Keep same key names for frontend compatibility
+        'last_month_sales': [round(v, 2) for v in growing[last_week_col]]
     }
 
 def _get_prescriber_analysis(df, top_n=15):
@@ -110,12 +118,55 @@ def _get_prescriber_analysis(df, top_n=15):
     return {'labels': prescribers.index.tolist(), 'data': [round(v, 2) for v in prescribers.values]}
 
 def _get_high_free_quantity_products(df, top_n=15):
-    if df.empty or 'free_quantity' not in df.columns or df['free_quantity'].sum() == 0: 
+    if df.empty or 'free_quantity' not in df.columns or df['free_quantity'].sum() == 0:
         return {'labels': [], 'data': []}
     free_items = df.groupby('item_name')['free_quantity'].sum().nlargest(top_n)
     # Filter out items with 0 free quantity
     free_items = free_items[free_items > 0]
     return {'labels': free_items.index.tolist(), 'data': [int(v) for v in free_items.values]}
+
+# REMOVED _get_medical_rep_performance as it's not needed
+
+def _get_weekly_growth_trends(df):
+    """
+    Calculate weekly growth trends for sales.
+    """
+    if df.empty or df['date'].dt.to_period('W').nunique() < 2:
+        return None
+
+    df_copy = df.copy()
+    df_copy['week'] = df_copy['date'].dt.to_period('W')
+    weekly_sales = df_copy.groupby('week')['value'].sum().sort_index()
+
+    if len(weekly_sales) < 2:
+        return None
+
+    growth_rates = weekly_sales.pct_change().fillna(0) * 100
+    
+    return {
+        'labels': [f"Week {i+1} vs Week {i}" for i in range(1, len(weekly_sales.index))],
+        'data': [round(v, 2) for v in growth_rates.values[1:]] # Skip the first value which is NaN/0
+    }
+
+def _get_area_performance_comparison(df):
+    """
+    Compare performance across different areas.
+    """
+    if df.empty or 'area' not in df.columns:
+        return None
+
+    area_stats = df.groupby('area').agg({
+        'value': 'sum',
+        'bill_no': 'nunique'
+    }).round(2).reset_index()
+
+    return {
+        'labels': area_stats['area'].tolist(),
+        'totalSales': area_stats['value'].tolist(),
+        'orderCount': area_stats['bill_no'].tolist()
+    }
+
+# REMOVED _get_stockist_insights as it was unused
 
 # --- The Main API View for the Analytics Dashboard ---
 
@@ -136,6 +187,8 @@ def sales_data_api(request):
             'growingMedicines': {'labels': [], 'prev_month_sales': [], 'last_month_sales': []},
             'prescriberAnalysis': {'labels': [], 'data': []},
             'highFreeQuantity': {'labels': [], 'data': []},
+            'weeklyGrowthTrends': None,
+            'areaPerformance': None,
         })
         
     # --- Data Cleaning and Preparation ---
@@ -151,6 +204,8 @@ def sales_data_api(request):
         'growingMedicines': _get_growing_medicines(df),
         'prescriberAnalysis': _get_prescriber_analysis(df),
         'highFreeQuantity': _get_high_free_quantity_products(df),
+        'weeklyGrowthTrends': _get_weekly_growth_trends(df),
+        'areaPerformance': _get_area_performance_comparison(df),
     }
     
     return JsonResponse(response_data)
