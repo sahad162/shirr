@@ -1,272 +1,301 @@
-// Analytics.jsx
+  import React, { useState, useEffect } from 'react';
+  import axios from 'axios';
+  import { Line, Bar, Pie } from 'react-chartjs-2';
+  import baseURL from '../Services/baseURL';
+  import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
-import baseURL from '../Services/baseURL';
-import { chartColors, getTransparentColors } from '../styles/chartColor'; // <-- Import new colors
-import {
-  Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend,
-} from 'chart.js';
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 
-// Register Chart.js components
-ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend );
+  export default function Analytics() {
+    const [file, setFile] = useState(null);
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [dashboardData, setDashboardData] = useState(null);
+    const [selectedArea, setSelectedArea] = useState('');
 
-// --- Reusable UI Components ---
-
-const LoadingSpinner = () => (
-  <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
-    <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
-
-const EmptyState = () => (
-  <div className="text-center p-10 border-2 border-dashed rounded-lg bg-white">
-    <h3 className="text-2xl font-semibold text-gray-700">No Data Available</h3>
-    <p className="mt-2 text-gray-500">Please upload a sales file to begin your analysis.</p>
-  </div>
-);
-
-const DashboardCard = ({ title, children }) => (
-  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-    <h3 className="text-xl font-semibold mb-4 text-gray-800">{title}</h3>
-    <div className="relative h-96">{children}</div>
-  </div>
-);
-
-
-export default function Analytics() {
-  const [file, setFile] = useState(null);
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(true); // Start with loading true
-  const [dashboardData, setDashboardData] = useState(null);
-  const [selectedArea, setSelectedArea] = useState('');
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(`${baseURL}/api/sales-data/`, { withCredentials: true });
-      setDashboardData(res.data);
-    } catch (err) {
-      setMessage('Could not fetch analytics data.');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(); // Fetch initial data on component mount
-  }, []);
-
-  useEffect(() => {
-    if (dashboardData?.topMedicinesByArea) {
-      const availableAreas = Object.keys(dashboardData.topMedicinesByArea);
-      if (availableAreas.length > 0 && !availableAreas.includes(selectedArea)) {
-        setSelectedArea(availableAreas[0]);
+    useEffect(() => {
+      if (dashboardData?.topMedicinesByArea) {
+        const availableAreas = Object.keys(dashboardData.topMedicinesByArea);
+        if (availableAreas.length > 0 && !availableAreas.includes(selectedArea)) {
+          setSelectedArea(availableAreas[0]);
+        }
       }
-    }
-  }, [dashboardData, selectedArea]);
+    }, [dashboardData, selectedArea]);
 
-  const handleUpload = async e => {
-    e.preventDefault();
-    if (!file) return;
-    const formData = new FormData();
-    formData.append('file', file);
-    setLoading(true);
-    setMessage('');
-    try {
-      await axios.post(`${baseURL}/api/upload/`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true,
-      });
-      setMessage('Upload successful! Refreshing analytics...');
-      await fetchData(); // Refetch all data
-      setMessage('Analytics updated!');
-    } catch (err) {
-      const errorMsg = err.response?.data?.error || 'Upload failed.';
-      setMessage(errorMsg);
-    } finally {
-      setFile(null);
-      if (document.querySelector('input[type="file"]')) {
-        document.querySelector('input[type="file"]').value = '';
+    const handleUpload = async e => {
+      e.preventDefault();
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      setLoading(true);
+      setMessage('');
+      try {
+        await axios.post(`${baseURL}/api/upload/`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+          withCredentials: true,
+        });
+        setMessage('Upload successful! Fetching updated analytics...');
+        const res = await axios.get(`${baseURL}/api/sales-data/`, { withCredentials: true });
+        setDashboardData(res.data);
+        setMessage('Analytics updated!');
+      } catch (err) {
+        const errorMsg = err.response?.data?.error || 'Upload failed.';
+        setMessage(errorMsg);
+      } finally {
+        setLoading(false);
+        setFile(null);
+        if (document.querySelector('input[type="file"]')) {
+          document.querySelector('input[type="file"]').value = '';
+        }
       }
-    }
-  };
-
-  const handleClear = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-      await axios.get(`${baseURL}/api/clear-data/`, { withCredentials: true });
-      setMessage('All data has been cleared.');
-      await fetchData(); // Refetch data (which will be empty)
-    } catch (err) {
-      const errorMsg = err.response?.data?.error || 'Clearing data failed.';
-      setMessage(errorMsg);
-    }
-  };
-
-  // --- Chart Data Preparation ---
-
-  const highFreeQuantityChartData = () => {
-    if (!dashboardData?.highFreeQuantity?.labels?.length) return null;
-    let { labels, data } = dashboardData.highFreeQuantity;
-
-    // Limit to top 9 and group the rest as "Others"
-    if (labels.length > 10) {
-      const topLabels = labels.slice(0, 9);
-      const topData = data.slice(0, 9);
-      const otherData = data.slice(9).reduce((acc, val) => acc + val, 0);
-      
-      labels = [...topLabels, "Others"];
-      data = [...topData, otherData];
-    }
-    
-    return {
-      labels,
-      datasets: [{
-        data,
-        backgroundColor: chartColors,
-        borderColor: '#ffffff',
-        borderWidth: 2,
-      }],
     };
-  };
 
+    const handleClear = async () => {
+      setLoading(true);
+      setMessage('');
+      try {
+        await axios.get(`${baseURL}/api/clear-data/`, { withCredentials: true });
+        setMessage('Session data cleared.');
+        setDashboardData(null);
+        setSelectedArea('');
+      } catch (err) {
+        const errorMsg = err.response?.data?.error || 'Clearing data failed.';
+        setMessage(errorMsg);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return (
-    <div className="bg-slate-100 min-h-screen">
-      <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800">Sales Analytics Dashboard</h1>
-          {dashboardData && <p className="mt-2 text-lg text-gray-600">
-            Total Records Analyzed: <strong>{dashboardData.totalRecords.toLocaleString()}</strong>
-          </p>}
-        </header>
+    const renderLineTrends = () => {
+      if (!dashboardData?.salesTrendsByArea) return <p>No data available.</p>;
+      const trends = dashboardData.salesTrendsByArea;
+      const firstArea = Object.values(trends)[0];
+      if (!firstArea) return <p>No trend data to display.</p>;
 
-        {/* --- Controls Section --- */}
-        <div className="mb-8 p-4 rounded-lg bg-white shadow-md flex flex-wrap items-center gap-4">
-          <input
-            type="file" onChange={e => setFile(e.target.files[0])} accept=".txt,.pdf"
-            className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-          />
-          <button onClick={handleUpload} disabled={loading || !file} className="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
-            {loading ? 'Processing...' : 'Upload & Analyze'}
-          </button>
-          <button onClick={handleClear} disabled={loading} className="ml-auto bg-red-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
-            {loading ? 'Clearing...' : 'Clear All Data'}
-          </button>
-        </div>
-        {message && <p className="mb-4 text-center font-semibold text-blue-800">{message}</p>}
+      const labels = firstArea.labels;
+      const datasets = Object.entries(trends).map(([area, chart]) => ({
+        label: `Sales in ${area}`,
+        data: chart.data,
+        borderColor: getColor(area),
+        backgroundColor: getColor(area),
+        tension: 0.3,
+        fill: false,
+      }));
 
-        {/* --- Main Dashboard --- */}
-        <div className="relative">
-          {loading && <LoadingSpinner />}
-          {(!dashboardData || dashboardData.totalRecords === 0) && !loading ? (
-            <EmptyState />
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <DashboardCard title="1. Sales Trends by Area (Weekly)">
-                 <Line data={{
-                    labels: dashboardData?.salesTrendsByArea?.[Object.keys(dashboardData.salesTrendsByArea)[0]]?.labels || [],
-                    datasets: Object.entries(dashboardData?.salesTrendsByArea || {}).map(([area, chart], index) => ({
-                      label: area,
-                      data: chart.data,
-                      borderColor: chartColors[index % chartColors.length],
-                      tension: 0.1,
-                      fill: false,
-                    })),
-                  }} options={{ maintainAspectRatio: false }} />
-              </DashboardCard>
-              
-              <DashboardCard title="2. Top 10 Medicines by Area">
-                  <div className="absolute top-0 right-0 z-10 p-2">
-                    <select
-                      className="border p-2 rounded-md bg-gray-50"
-                      value={selectedArea}
-                      onChange={e => setSelectedArea(e.target.value)}
-                      disabled={!dashboardData?.topMedicinesByArea || Object.keys(dashboardData.topMedicinesByArea).length === 0}
-                    >
-                      {dashboardData?.topMedicinesByArea && Object.keys(dashboardData.topMedicinesByArea).map(area => (
-                        <option key={area} value={area}>{area}</option>
-                      ))}
-                    </select>
+      return <Line data={{ labels, datasets }} options={{ responsive: true, plugins: { legend: { position: 'bottom' } } }} />;
+    };
+
+    const getColor = (key) => {
+      const palette = [
+        '#6366F1', '#EC4899', '#F59E0B', '#10B981', '#3B82F6',
+        '#8B5CF6', '#F43F5E', '#14B8A6', '#F87171', '#60A5FA',
+      ];
+      const hash = [...key].reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      return palette[hash % palette.length];
+    };
+
+    const topChart = dashboardData?.topMedicinesByArea?.[selectedArea] || { labels: [], data: [] };
+
+    return (
+      <div className="container mx-auto px-4 py-6">
+        <h1 className="text-3xl text-center font-bold text-gray-500 mb-6">Integrated Analytics Dashboard</h1>
+
+          <div className="w-full max-w-2xl mx-auto">
+        <div className="bg-gradient-to-br from-white via-slate-50 to-orange-50/30 backdrop-blur-sm border border-slate-200/60 shadow-2xl rounded-2xl p-8 relative overflow-hidden group hover:shadow-3xl transition-all duration-500">
+          <div className="relative flex flex-col md:flex-row gap-6 items-center">
+            <div className="flex-1 min-w-0">
+              <label className="relative block cursor-pointer group/input">
+                <input
+                  type="file"
+                  onChange={e => setFile(e.target.files[0])}
+                  accept=".txt,.pdf"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <div className="bg-gradient-to-r from-slate-100 to-slate-50 border-2 border-dashed border-slate-300 rounded-xl px-6 py-4 text-center transition-all duration-300 group-hover/input:border-indigo-400 group-hover/input:bg-gradient-to-r group-hover/input:from-indigo-50 group-hover/input:to-purple-50 group-hover/input:scale-105">
+                  <div className="flex items-center justify-center space-x-3">
+                    <div className="p-2 bg-indigo-100 rounded-full group-hover/input:bg-indigo-200 transition-colors">
+                      <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-semibold text-slate-700 group-hover/input:text-indigo-700">Choose file or drag & drop</p>
+                      <p className="text-xs text-slate-500 mt-1">PDF, TXT files only</p>
+                    </div>
                   </div>
-                   <Bar data={{
-                    labels: dashboardData?.topMedicinesByArea?.[selectedArea]?.labels || [],
-                    datasets: [{
-                      label: 'Total Sales Value',
-                      data: dashboardData?.topMedicinesByArea?.[selectedArea]?.data || [],
-                      backgroundColor: getTransparentColors(0.6)[0],
-                      borderColor: chartColors[0],
-                      borderWidth: 1,
-                    }]
-                  }} options={{ maintainAspectRatio: false }} />
-              </DashboardCard>
-
-              <DashboardCard title="3. Medicines with Weekly Growth">
-                  <Bar data={{
-                    labels: dashboardData?.growingMedicines?.labels || [],
-                    datasets: [
-                      { label: 'Previous Week Sales', data: dashboardData?.growingMedicines?.prev_month_sales || [], backgroundColor: getTransparentColors(0.6)[1] },
-                      { label: 'Current Week Sales', data: dashboardData?.growingMedicines?.last_month_sales || [], backgroundColor: getTransparentColors(0.6)[0] }
-                    ]
-                  }} options={{ maintainAspectRatio: false }} />
-              </DashboardCard>
-              
-              <DashboardCard title="4. Top 15 Prescriber Analysis">
-                <Bar data={{
-                  labels: dashboardData?.prescriberAnalysis?.labels || [],
-                  datasets: [{
-                    label: 'Total Sales Value',
-                    data: dashboardData?.prescriberAnalysis?.data || [],
-                    backgroundColor: getTransparentColors(0.6)[3],
-                    borderColor: chartColors[3],
-                    borderWidth: 1,
-                  }]
-                }} options={{ indexAxis: 'y', maintainAspectRatio: false }} />
-              </DashboardCard>
-
-              <DashboardCard title="5. Top Products with Free Quantity">
-                {highFreeQuantityChartData() ? (
-                  <Doughnut data={highFreeQuantityChartData()} options={{ maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }} />
-                ) : <p className="text-center text-gray-500">No free quantity data available.</p>}
-              </DashboardCard>
-
-              <DashboardCard title="6. Weekly Sales Growth Trends (%)">
-                {dashboardData?.weeklyGrowthTrends ? (
-                  <Line data={{
-                    labels: dashboardData.weeklyGrowthTrends.labels,
-                    datasets: [{
-                      label: 'Weekly Growth %',
-                      data: dashboardData.weeklyGrowthTrends.data,
-                      borderColor: chartColors[1],
-                      backgroundColor: getTransparentColors(0.2)[1],
-                      tension: 0.4,
-                      fill: true,
-                    }]
-                  }} options={{ maintainAspectRatio: false, scales: { y: { ticks: { callback: (value) => `${value}%` } } } }} />
-                ) : <p className="text-center text-gray-500">Insufficient data for trend analysis.</p>}
-              </DashboardCard>
-              
-              <DashboardCard title="7. Area Performance Comparison">
-                {dashboardData?.areaPerformance ? (
-                  <Bar data={{
-                    labels: dashboardData.areaPerformance.labels,
-                    datasets: [
-                      { label: 'Total Sales', data: dashboardData.areaPerformance.totalSales, backgroundColor: getTransparentColors(0.6)[0], yAxisID: 'y' },
-                      { label: 'Number of Orders', data: dashboardData.areaPerformance.orderCount, backgroundColor: getTransparentColors(0.6)[2], yAxisID: 'y1' }
-                    ]
-                  }} options={{ maintainAspectRatio: false, scales: {
-                    y: { type: 'linear', display: true, position: 'left', ticks: { callback: (value) => `₹${(value/1000).toFixed(0)}K` } },
-                    y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false } }
-                  } }} />
-                ) : <p className="text-center text-gray-500">No area performance data available.</p>}
-              </DashboardCard>
+                </div>
+              </label>
             </div>
-          )}
+
+        
+            <div className="flex gap-3">
+              <button
+                onClick={handleUpload}
+                style={{background:'#ee4d38'}}
+                disabled={loading || !file}
+                className="relative  text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:scale-100 disabled:shadow-md group/btn overflow-hidden"
+              >
+                <span className="relative flex items-center gap-2">
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      Upload & Analyze
+                    </>
+                  )}
+                </span>
+              </button>
+
+               <button
+                onClick={"#"}
+                style={{background:'#ee4d38'}}
+                disabled={loading || !file}
+                className="relative  text-white px-2 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:scale-100 disabled:shadow-md group/btn overflow-hidden"
+              >Download
+              </button>
+
+              <button
+                onClick={handleClear}
+                disabled={loading}
+                className="relative bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:scale-100 group/btn overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                <span className="relative flex items-center gap-2">
+                  
+                  {loading ? 'Clearing...' : 'Clear All'}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
+
+        {dashboardData ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+            <Card title="1. Sales Trends by Area (Weekly)">
+              {renderLineTrends()}
+            </Card>
+
+            <Card title="2. Top 10 Medicines by Area">
+              <select
+                className="border border-gray-300 p-2 rounded mb-4 w-full"
+                value={selectedArea}
+                onChange={e => setSelectedArea(e.target.value)}
+                disabled={!dashboardData.topMedicinesByArea}
+              >
+                <option value="" disabled>-- Select an Area --</option>
+                {Object.keys(dashboardData.topMedicinesByArea || {}).map(area => (
+                  <option key={area} value={area}>{area}</option>
+                ))}
+              </select>
+              <Bar
+                data={{
+                  labels: topChart.labels,
+                  datasets: [{
+                    label: 'Total Sales Value',
+                    data: topChart.data,
+                    backgroundColor: '#3B82F6'
+                  }]
+                }}
+                options={{ plugins: { legend: { display: false } } }}
+              />
+            </Card>
+
+            {/* Growing Medicines */}
+            <Card title="3. Medicines with Monthly Growth">
+              <Bar
+                data={{
+                  labels: dashboardData.growingMedicines.labels,
+                  datasets: [
+                    {
+                      label: 'Previous Month Sales',
+                      data: dashboardData.growingMedicines.prev_month_sales,
+                      backgroundColor: '#FBBF24',
+                    },
+                    {
+                      label: 'Last Month Sales',
+                      data: dashboardData.growingMedicines.last_month_sales,
+                      backgroundColor: '#34D399',
+                    }
+                  ]
+                }}
+              />
+            </Card>
+
+            {/* Top Prescribers */}
+            <Card title="4. Top 15 Prescriber Analysis">
+              <Bar
+                data={{
+                  labels: dashboardData.prescriberAnalysis.labels,
+                  datasets: [{
+                    label: 'Total Sales Value',
+                    data: dashboardData.prescriberAnalysis.data,
+                    backgroundColor: '#A78BFA'
+                  }]
+                }}
+                options={{ indexAxis: 'y' }}
+              />
+            </Card>
+
+            {/* Free Quantity */}
+            <Card title="5. Products with High Free Quantity" className="md:col-span-2 h-[450px]">
+              <Pie
+                data={{
+                  labels: dashboardData.highFreeQuantity.labels,
+                  datasets: [{
+                    label: 'Free Units',
+                    data: dashboardData.highFreeQuantity.data,
+                    backgroundColor: [
+                      '#F87171', '#60A5FA', '#FBBF24', '#34D399', '#A78BFA', '#FB7185',
+                    ],
+                  }]
+                }}
+                options={{ maintainAspectRatio: false }}
+              />
+            </Card>
+          </div>
+        ) : (
+          <div className='flex justify-center'>
+          <div className="text-center  w-100  text-gray-500 border border-dashed p-10 rounded-lg bg-white shadow-inner mt-10">
+            <p>🚫 No data to display. Please upload a sales file to begin analysis.</p>
+          </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const Card = ({ title, children, className = '' }) => (
+    <div className={`bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition ${className}`}>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">{title}</h3>
+      {children}
     </div>
   );
-}

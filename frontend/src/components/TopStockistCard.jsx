@@ -12,7 +12,6 @@ function TopStockistCard({ revenueByArea = [] }) {
   const maxRevenue = Math.max(...revenueByArea.map(c => c.revenue));
   
   const getFlag = (name) => {
-      // Simple function to get a 3-letter code
       return name.substring(0, 3).toUpperCase();
   }
 
@@ -28,26 +27,29 @@ function TopStockistCard({ revenueByArea = [] }) {
         </button>
       </div>
       <div className="space-y-4">
-        {revenueByArea.map((area, idx) => (
-          <div key={idx} className="space-y-2">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <span className="text-md font-mono px-2 py-1 bg-white/20 rounded">{getFlag(area.name)}</span>
-                <span className="font-medium">{area.name}</span>
-              </div>
-              <span className="font-semibold text-lg">
-                ₹{(area.revenue / 1000).toFixed(0)}K
-              </span>
-            </div>
-            <div className="w-full bg-white/30 rounded-full h-2 overflow-hidden">
-              <div
-                className="bg-white/90 h-full rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${maxRevenue > 0 ? (area.revenue / maxRevenue) * 100 : 0}%`, minWidth: '8px' }}
-              ></div>
-            </div>
+  {[...revenueByArea]
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5)
+    .map((area, idx) => (
+      <div key={idx} className="space-y-2">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-md font-mono px-2 py-1 bg-white/20 rounded">{getFlag(area.name)}</span>
+            <span className="font-medium">{area.name}</span>
           </div>
-        ))}
+          <span className="font-semibold text-lg">
+            ₹{(area.revenue / 1000).toFixed(0)}K
+          </span>
+        </div>
+        <div className="w-full bg-white/30 rounded-full h-2 overflow-hidden">
+          <div
+            className="bg-white/90 h-full rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${maxRevenue > 0 ? (area.revenue / maxRevenue) * 100 : 0}%`, minWidth: '8px' }}
+          ></div>
+        </div>
       </div>
+    ))}
+</div>
     </div>
   );
 }

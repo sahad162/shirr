@@ -57,17 +57,17 @@ export default function SalesByCategoryCard({ growingMedicines }) {
           <div className="border border-gray-300 rounded-full p-2"><MoreHorizontal size={18} /></div>
         </div>
       </div>
-      <div className="flex gap-4 items-center mt-6">
+      <div className="flex gap-6 items-center mt-14">
         <div className="relative w-32 h-32">
           <Doughnut data={data} options={options} />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-sm font-semibold pointer-events-none">
             <p className="text-gray-400">Top 3</p>
-            <p className="text-white text-lg">₹{total.toLocaleString()}</p>
+            <p className="text-white text-md">₹{total.toLocaleString()}</p>
           </div>
         </div>
         <div className="flex-1 flex flex-col gap-3">
           {categoryDetails.map((item, index) => (
-            <div key={index} className="flex items-center justify-between gap-2">
+            <div key={index} className="flex items-center justify-between gap-2 font-[poppins] ">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
                 <div>
