@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/upload/', views.api_file_upload_view, name='api_file_upload'),
     path('api/sales-data/', views.sales_data_api, name='api_sales_data'),
     path('api/clear-data/', views.clear_data_view, name='api_clear_data'),
+    path('api/generate-report-pdf/', views.generate_pdf_report, name='api_generate_pdf_report'),
 ]

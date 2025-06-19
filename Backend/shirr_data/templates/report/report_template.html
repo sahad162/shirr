@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Shirr Pharma - Monthly Performance Report</title>
+  <style>
+  @page { size: A4; margin: 20px; margin-bottom:30px;  margin-top:30px}
+
+  body {
+    font-family: 'Lato', 'Helvetica', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: white;
+    line-height: 1.5;
+  }
+
+  .page-container { padding: 25px 30px; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 20px;
+  }
+
+  .company-logo { height: 50px; }
+
+  .company-info { text-align: right; }
+
+  .company-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2f2b78;
+  }
+
+  .report-period { font-size: 13px; color: #666; }
+
+  .report-title {
+    text-align: center;
+    margin: 25px 0;
+  }
+
+  .report-title h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #212529;
+    font-weight: 600;
+  }
+
+  .report-title p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #6c757d;
+  }
+
+  .section-title {
+    background-color: #f8f9fa;
+    color: #212529;
+    padding: 8px 12px;
+    margin: 20px 0 10px;
+    font-weight: 600;
+    font-size: 15px;
+    border-left: 4px solid #2f2b78;
+  }
+
+  .section-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 30px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 20px;
+  }
+
+  th, td {
+    border: 1px solid #dee2e6;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    text-align: left;
+    color: #495057;
+  }
+
+  tr:nth-child(even) { background-color: #fdfdfd; }
+
+  footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #e6e6e6;
+    text-align: center;
+    font-size: 11px;
+    color: #6c757d;
+  }
+
+  .timestamp {
+    color: #6c757d;
+    text-align: right;
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+  .kpi-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+
+  .kpi-card {
+    background: #f8f9fa;
+    border-left: 4px solid #2f2b78;
+    padding: 15px;
+    width: 23%;
+    box-sizing: border-box;
+  }
+
+  .kpi-title {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 5px;
+  }
+
+  .kpi-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #212529;
+  }
+
+  .kpi-change {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+  .positive { color: #28a745; }
+  .negative { color: #dc3545; }
+</style>
+
+</head>
+<body>
+<div class="page-container">
+  <header>
+    <img class="company-logo" src="{{ logo_path }}" alt="Shirr Pharma Logo">
+    <div class="company-info">
+      <!-- <div class="company-name">Shirr Pharma Pvt Ltd</div> -->
+      <div class="report-period">Monthly Performance Report – {{ reporting_month }}</div>
+    </div>
+  </header>
+
+  <div class="report-title">
+    <h1>Shirr Pharma – Sales & Distribution Report</h1>
+    <p>Reporting Period: {{ reporting_period }}</p>
+  </div>
+
+  <div class="timestamp">Generated: {{ generated_on }}</div>
+
+  {% if kpiMetrics %}
+  <div class="kpi-container">
+    <div class="kpi-card">
+      <div class="kpi-title">TOTAL REVENUE</div>
+      <div class="kpi-value">₹{{ kpiMetrics.totalSales|floatformat:2 }}</div>
+      <div class="kpi-change positive">↑ {{ kpiMetrics.salesChangePercentage }}%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">PRODUCTS SOLD</div>
+      <div class="kpi-value">{{ kpiMetrics.totalProducts }}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">STOCKISTS</div>
+      <div class="kpi-value">{{ kpiMetrics.totalStockists }}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">ORDERS</div>
+      <div class="kpi-value">{{ kpiMetrics.totalOrders }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if areaPerformanceRows %}
+  <div class="section-block">
+    <div class="section-title">1. District-wise Performance</div>
+    <table>
+      <tr><th>District</th><th>Revenue (₹)</th><th>Orders</th></tr>
+      {% for row in areaPerformanceRows %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td>₹{{ row.totalSales|floatformat:2 }}</td>
+        <td>{{ row.orderCount }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if topMedicinesRows %}
+  <div class="section-block">
+    <div class="section-title">2. Top Selling Products</div>
+    <table>
+      <tr><th>Product</th><th>Revenue (₹)</th></tr>
+      {% for row in topMedicinesRows %}
+      <tr>
+        <td>{{ row.name }}</td>
+        <td>₹{{ row.revenue|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if growingRows %}
+  <div class="section-block">
+    <div class="section-title">3. Fastest Growing Medicines</div>
+    <table>
+      <tr><th>Medicine</th><th>Prev Month (₹)</th><th>Last Month (₹)</th><th>Growth (₹)</th></tr>
+      {% for row in growingRows %}
+      <tr>
+        <td>{{ row.label }}</td>
+        <td>₹{{ row.prev|floatformat:2 }}</td>
+        <td>₹{{ row.last|floatformat:2 }}</td>
+        <td>₹{{ row.growth|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if prescriberRows %}
+  <div class="section-block">
+    <div class="section-title">4. Top Prescribers</div>
+    <table>
+      <tr><th>Prescriber</th><th>Revenue (₹)</th></tr>
+      {% for row in prescriberRows %}
+      <tr>
+        <td>{{ row.name }}</td>
+        <td>₹{{ row.revenue|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if freeQtyRows %}
+  <div class="section-block">
+    <div class="section-title">5. High Free Quantity Medicines</div>
+    <table>
+      <tr><th>Product</th><th>Free Quantity</th></tr>
+      {% for row in freeQtyRows %}
+      <tr>
+        <td>{{ row.product }}</td>
+        <td>{{ row.qty }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if weeklyGrowthRows %}
+  <div class="section-block">
+    <div class="section-title">6. Weekly Growth Trend</div>
+    <table>
+      <tr><th>Week</th><th>Growth (%)</th></tr>
+      {% for row in weeklyGrowthRows %}
+      <tr>
+        <td>{{ row.week }}</td>
+        <td>{{ row.percent|floatformat:2 }}%</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  <footer>
+    <p>Confidential Report – Shirr Pharma Pvt Ltd | contact@shirrpharma.com | +91 9074720664</p>
+    <p>68/428(1), Thiruvallam, Thiruvananthapuram, Kerala 695027</p>
+  </footer>
+</div>
+</body>
+</html>

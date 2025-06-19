@@ -33,6 +33,8 @@
     const [loading, setLoading] = useState(false);
     const [dashboardData, setDashboardData] = useState(null);
     const [selectedArea, setSelectedArea] = useState('');
+    const [downloading, setDownloading] = useState(false);
+
 
     useEffect(() => {
       if (dashboardData?.topMedicinesByArea) {
@@ -70,6 +72,42 @@
         }
       }
     };
+
+const handleDownload = async () => {
+  if (!dashboardData) {
+    setMessage('No data to generate report.');
+    return;
+  }
+
+  setDownloading(true);
+  setMessage('Generating report...');
+
+  try {
+    const res = await axios.post(`${baseURL}/api/generate-report-pdf/`, dashboardData, {
+      responseType: 'blob',  // This is critical to treat the response as a file
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const blob = new Blob([res.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sales_report.pdf';
+    a.click();
+    a.remove();
+
+    setMessage('Report downloaded successfully.');
+  } catch (err) {
+    console.error('Download error:', err);
+    setMessage('Failed to download report.');
+  } finally {
+    setDownloading(false);
+  }
+};
+
+
 
     const handleClear = async () => {
       setLoading(true);
@@ -123,14 +161,15 @@
 
           <div className="w-full max-w-2xl mx-auto">
         <div className="bg-gradient-to-br from-white via-slate-50 to-orange-50/30 backdrop-blur-sm border border-slate-200/60 shadow-2xl rounded-2xl p-8 relative overflow-hidden group hover:shadow-3xl transition-all duration-500">
-          <div className="relative flex flex-col md:flex-row gap-6 items-center">
-            <div className="flex-1 min-w-0">
+          <div className="relative flex flex-col md:flex-col gap-6 items-center">
+
+            <div className="flex-1 min-w-150">
               <label className="relative block cursor-pointer group/input">
                 <input
                   type="file"
                   onChange={e => setFile(e.target.files[0])}
                   accept=".txt,.pdf"
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  className="absolute inset-0 w-full h-[full] opacity-0 cursor-pointer"
                 />
                 <div className="bg-gradient-to-r from-slate-100 to-slate-50 border-2 border-dashed border-slate-300 rounded-xl px-6 py-4 text-center transition-all duration-300 group-hover/input:border-indigo-400 group-hover/input:bg-gradient-to-r group-hover/input:from-indigo-50 group-hover/input:to-purple-50 group-hover/input:scale-105">
                   <div className="flex items-center justify-center space-x-3">
@@ -174,9 +213,9 @@
               </button>
 
                <button
-                onClick={"#"}
+                onClick={handleDownload}
                 style={{background:'#ee4d38'}}
-                disabled={loading || !file}
+                disabled={loading || !dashboardData}
                 className="relative  text-white px-2 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:scale-100 disabled:shadow-md group/btn overflow-hidden"
               >Download
               </button>

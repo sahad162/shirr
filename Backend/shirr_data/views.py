@@ -2,10 +2,17 @@
 
 import pandas as pd
 from django.db import transaction
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core.files.storage import default_storage
 from django.views.decorators.http import require_http_methods, require_POST
 from django.views.decorators.csrf import csrf_exempt
+import os
+from django.conf import settings
+import json
+import datetime
+import traceback
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 from . import txt_parser
 from .models import SalesTransaction
@@ -280,8 +287,89 @@ def sales_data_api(request):
         'revenueByArea': _get_revenue_by_area(df),
         'salesReport': _get_sales_report_summary(df), # This now calls the rewritten function
     }
-    
+    print(response_data)
     return JsonResponse(response_data)
+
+@require_http_methods(["POST"])
+@csrf_exempt
+def generate_pdf_report(request):
+
+    try:
+        data = json.loads(request.body)
+
+        # Prepare rows for rendering
+        area_perf = data.get('areaPerformance', {})
+        area_rows = [
+            {"label": area_perf["labels"][i], "totalSales": area_perf["totalSales"][i], "orderCount": area_perf["orderCount"][i]}
+            for i in range(len(area_perf.get("labels", [])))
+        ]
+
+        top_meds = data.get('topMedicinesByArea', {}).get('Thrissur', {})
+        top_meds_rows = [
+            {"name": top_meds["labels"][i], "revenue": top_meds["data"][i]}
+            for i in range(len(top_meds.get("labels", [])))
+        ]
+
+        growing = data.get('growingMedicines', {})
+        growing_rows = [
+            {
+                "label": growing["labels"][i],
+                "prev": growing["prev_month_sales"][i],
+                "last": growing["last_month_sales"][i],
+                "growth": growing["last_month_sales"][i] - growing["prev_month_sales"][i],
+            }
+            for i in range(len(growing.get("labels", [])))
+        ]
+
+        prescribers = data.get('prescriberAnalysis', {})
+        prescriber_rows = [
+            {"name": prescribers["labels"][i], "revenue": prescribers["data"][i]}
+            for i in range(len(prescribers.get("labels", [])))
+        ]
+
+        free_q = data.get('highFreeQuantity', {})
+        free_qty_rows = [
+            {"product": free_q["labels"][i], "qty": free_q["data"][i]}
+            for i in range(len(free_q.get("labels", [])))
+        ]
+
+        weekly = data.get('weeklyGrowthTrends', {})
+        weekly_growth_rows = [
+            {"week": weekly["labels"][i], "percent": weekly["data"][i]}
+            for i in range(len(weekly.get("labels", [])))
+        ]
+
+        #  Manually hardcoded logo path
+        
+        logo_path = os.path.join(settings.BASE_DIR, 'shirr_data', 'static', 'report', 'img', 'logo.png')
+        logo_path_url = f"file:///{logo_path.replace(os.sep, '/')}"
+
+        context = {
+            'logo_path': logo_path_url,
+            'kpiMetrics': data.get('kpiMetrics'),
+            'areaPerformanceRows': area_rows,
+            'topMedicinesRows': top_meds_rows,
+            'growingRows': growing_rows,
+            'prescriberRows': prescriber_rows,
+            'freeQtyRows': free_qty_rows,
+            'weeklyGrowthRows': weekly_growth_rows,
+            'reporting_month': datetime.datetime.now().strftime('%B %Y'),
+            'reporting_period': 'Latest Sales Period',
+            'generated_on': datetime.datetime.now().strftime('%B %d, %Y %I:%M %p'),
+        }
+
+        html_string = render_to_string("report/report_template.html", context)
+        pdf_file = HTML(string=html_string).write_pdf()
+
+        return HttpResponse(pdf_file, content_type='application/pdf', headers={
+            'Content-Disposition': 'attachment; filename="sales_report.pdf"'
+        })
+
+    except Exception as e:
+        traceback.print_exc()
+        return JsonResponse({'error': str(e)}, status=500)
+
+
 
 # Make sure _get_kpi_metrics is also present in your file from the previous step.
 
