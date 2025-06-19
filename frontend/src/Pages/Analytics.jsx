@@ -34,6 +34,7 @@
     const [dashboardData, setDashboardData] = useState(null);
     const [selectedArea, setSelectedArea] = useState('');
     const [downloading, setDownloading] = useState(false);
+    const allowedFileTypes = '.pdf,.docx,.doc,.xlsx,.xls,.txt,.csv';
 
 
     useEffect(() => {
@@ -53,26 +54,29 @@
       setLoading(true);
       setMessage('');
       try {
-        await axios.post(`${baseURL}/api/upload/`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          withCredentials: true,
-        });
-        setMessage('Upload successful! Fetching updated analytics...');
-        const res = await axios.get(`${baseURL}/api/sales-data/`, { withCredentials: true });
-        setDashboardData(res.data);
-        setMessage('Analytics updated!');
-      } catch (err) {
-        const errorMsg = err.response?.data?.error || 'Upload failed.';
-        setMessage(errorMsg);
-      } finally {
-        setLoading(false);
-        setFile(null);
-        if (document.querySelector('input[type="file"]')) {
-          document.querySelector('input[type="file"]').value = '';
-        }
-      }
-    };
+      // MODIFIED: Use the new unified endpoint
+      const uploadResponse = await axios.post(`${baseURL}/api/upload/`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        withCredentials: true,
+      });
 
+      setMessage(uploadResponse.data.message + ' Fetching updated analytics...');
+      
+      const res = await axios.get(`${baseURL}/api/sales-data/`, { withCredentials: true });
+      setDashboardData(res.data);
+      setMessage(uploadResponse.data.message + ' Analytics updated!');
+
+    } catch (err) {
+      const errorMsg = err.response?.data?.error || 'Upload failed.';
+      setMessage(errorMsg);
+    } finally {
+      setLoading(false);
+      setFile(null);
+      if (document.querySelector('input[type="file"]')) {
+        document.querySelector('input[type="file"]').value = '';
+      }
+    }
+  };
 const handleDownload = async () => {
   if (!dashboardData) {
     setMessage('No data to generate report.');
@@ -165,12 +169,14 @@ const handleDownload = async () => {
 
             <div className="flex-1 min-w-150">
               <label className="relative block cursor-pointer group/input">
-                <input
-                  type="file"
-                  onChange={e => setFile(e.target.files[0])}
-                  accept=".txt,.pdf"
-                  className="absolute inset-0 w-full h-[full] opacity-0 cursor-pointer"
-                />
+              
+                   <input
+    type="file"
+    onChange={e => setFile(e.target.files[0])}
+    // MODIFIED: Update accepted file types
+    accept={allowedFileTypes}
+    className="absolute inset-0 w-full h-[full] opacity-0 cursor-pointer"
+  />
                 <div className="bg-gradient-to-r from-slate-100 to-slate-50 border-2 border-dashed border-slate-300 rounded-xl px-6 py-4 text-center transition-all duration-300 group-hover/input:border-indigo-400 group-hover/input:bg-gradient-to-r group-hover/input:from-indigo-50 group-hover/input:to-purple-50 group-hover/input:scale-105">
                   <div className="flex items-center justify-center space-x-3">
                     <div className="p-2 bg-indigo-100 rounded-full group-hover/input:bg-indigo-200 transition-colors">
@@ -180,7 +186,7 @@ const handleDownload = async () => {
                     </div>
                     <div className="text-left">
                       <p className="text-sm font-semibold text-slate-700 group-hover/input:text-indigo-700">Choose file or drag & drop</p>
-                      <p className="text-xs text-slate-500 mt-1">PDF, TXT files only</p>
+                      <p className="text-xs text-slate-500 mt-1">PDF, DOC, Excel, TXT, CSV files</p>
                     </div>
                   </div>
                 </div>

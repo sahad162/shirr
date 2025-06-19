@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'shirr.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE':   'django.db.backends.postgresql',
-    'NAME':     'shirr',
-    'USER':     'shirr',       
-    'PASSWORD': 'shirr', 
+    'NAME':     'shirr_db',
+    'USER':     'postgres',       
+    'PASSWORD': 'Root', 
     'HOST':     'localhost',
     'PORT':     '5432',
   }

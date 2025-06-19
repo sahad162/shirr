@@ -10,7 +10,7 @@ const ReportUploadPage = () => {
   const [message, setMessage] = useState('');
   const fileInputRef = useRef(null);
 
-  const allowedFileTypes = ['.pdf', '.docx', '.doc', '.xlsx', '.xls', '.txt', '.csv'];
+   const allowedFileTypes = ['.pdf', '.docx', '.doc', '.xlsx', '.xls', '.txt', '.csv'];
   const maxFileSize = 10 * 1024 * 1024; 
 
   const validateFile = (file) => {
@@ -103,10 +103,9 @@ const ReportUploadPage = () => {
     files.forEach((fileObj) => {
       formData.append('file', fileObj.file);
     });
-    formData.append('uploadedAt', new Date().toISOString());
-    formData.append('userId', 'current-user-id');
+    
 
-    const response = await axios.post(`${baseURL}/api/reports/upload/`, formData, {
+    const response = await axios.post(`${baseURL}/api/upload/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -122,7 +121,7 @@ const ReportUploadPage = () => {
     
 
     setUploadStatus('success');
-    setMessage(`Successfully uploaded ${files.length} file(s)`);
+    setMessage(response.data.message);
 
     setTimeout(() => {
       setFiles([]);
