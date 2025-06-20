@@ -1,7 +1,5 @@
-# shirr_data/views.py
-
 import pandas as pd
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods, require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -10,22 +8,33 @@ from django.conf import settings
 import json
 import datetime
 import traceback
-from django.template.loader import render_to_string
 from weasyprint import HTML
+import hashlib
 
 from . import txt_parser
 from .models import SalesTransaction, DataFile
 
+# Helper function remains the same
+def calculate_sha256(file_obj):
+    """Calculates the SHA-256 hash of a file-like object in chunks."""
+    sha256_hash = hashlib.sha256()
+    file_obj.seek(0)
+    for chunk in file_obj.chunks():
+        sha256_hash.update(chunk)
+    file_obj.seek(0)
+    return sha256_hash.hexdigest()
+
+
 # ==============================================================================
-# UNIFIED FILE UPLOAD VIEW
+# UNIFIED FILE UPLOAD VIEW (CORRECTED LOGIC)
 # ==============================================================================
 
 @csrf_exempt
 @require_POST
 def api_unified_upload_view(request):
     """
-    Handles all file uploads, intelligently attempting to parse data files
-    while securely storing all uploaded files for tracking.
+    Handles all file uploads, preventing duplicate file storage by checking
+    the file hash *before* saving the file to disk.
     """
     uploaded_files = request.FILES.getlist('file')
     if not uploaded_files:
@@ -34,18 +43,33 @@ def api_unified_upload_view(request):
     parsed_record_count = 0
     parsed_file_count = 0
     stored_only_files = []
+    skipped_as_duplicate = []
 
     for f in uploaded_files:
-        # Step 1: Always save the file to DataFile for tracking.
-        data_file_instance = DataFile.objects.create(file=f)
-        
         try:
+            # Step 1: Calculate the file's hash in memory.
+            current_file_hash = calculate_sha256(f)
+
+            # --- THIS IS THE KEY LOGIC CHANGE ---
+            # Step 2: Check if this hash already exists in the database.
+            if DataFile.objects.filter(file_hash=current_file_hash).exists():
+                # If it exists, skip this file entirely. Do not save it.
+                skipped_as_duplicate.append(f.name)
+                continue  # Move to the next file in the loop
+
+            # --- If we get here, the file is new. ---
+            
+            # Step 3: Now it's safe to create the model, which saves the file.
+            data_file_instance = DataFile.objects.create(
+                file=f,
+                file_hash=current_file_hash
+            )
             file_path = data_file_instance.file.path
             
-            # Step 2: Attempt to parse the file.
+            # Step 4: Attempt to parse the new file.
             df_parsed = txt_parser.parse_sales_file(file_path)
             
-            # Step 3: If parsing is successful, save the transaction data.
+            # Step 5: If parsing is successful, save the transaction data.
             if df_parsed is not None and not df_parsed.empty:
                 records = df_parsed.to_dict('records')
                 model_instances = [SalesTransaction(**rec) for rec in records]
@@ -56,29 +80,48 @@ def api_unified_upload_view(request):
                 parsed_record_count += len(records)
                 parsed_file_count += 1
             else:
-                # The file type has no parser (like .docx) or contained no valid data.
                 stored_only_files.append(f.name)
 
         except Exception as e:
-            # The parser itself raised an error. Log it and continue to the next file.
+            # This is a general catch-all for other unexpected errors during processing.
             print(f"Error processing file {f.name}: {str(e)}")
             traceback.print_exc()
             stored_only_files.append(f.name)
 
-    # Step 4: Create a comprehensive success message.
+    # Step 6: Create a comprehensive success message.
     message_parts = []
     if parsed_record_count > 0:
-        message_parts.append(f"Successfully parsed {parsed_record_count} records from {parsed_file_count} file(s).")
+        message_parts.append(f"Successfully processed {parsed_record_count} records from {parsed_file_count} new file(s).")
     
+    if skipped_as_duplicate:
+        message_parts.append(f"{len(skipped_as_duplicate)} file(s) were skipped as duplicates: {', '.join(skipped_as_duplicate)}.")
+        
     if stored_only_files:
         message_parts.append(f"{len(stored_only_files)} file(s) were stored but not parsed: {', '.join(stored_only_files)}.")
 
     if not message_parts:
-        message = "Files were uploaded but contained no data to process."
+        message = "Files were uploaded, but no new data was processed (they may have all been duplicates)."
     else:
         message = " ".join(message_parts)
         
     return JsonResponse({'message': message})
+
+
+# ==============================================================================
+# DATA MANAGEMENT & ANALYTICS VIEWS (Unchanged)
+# ==============================================================================
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def clear_data_view(request):
+    """ Deletes all records from the SalesTransaction table. """
+    try:
+        count, _ = SalesTransaction.objects.all().delete()
+        DataFile.objects.all().delete() # Also clear the file records
+        # You might also want to clear the physical files from the 'uploads' directory here
+        return JsonResponse({'message': f"Successfully deleted {count} records and all tracked files."})
+    except Exception as e:
+        return JsonResponse({'error': f"An error occurred: {e}"}, status=500)
 
 
 # ==============================================================================
