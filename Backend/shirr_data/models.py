@@ -10,7 +10,8 @@ class DataFile(models.Model):
 
 # NEW MODEL: This will store the actual parsed transaction data in PostgreSQL
 class SalesTransaction(models.Model):
-    # Common fields from both parsers
+    # --- All fields are defined first ---
+    # Common fields
     customer_name = models.CharField(max_length=255, db_index=True)
     item_name = models.CharField(max_length=255, db_index=True)
     date = models.DateField(db_index=True)
@@ -23,9 +24,9 @@ class SalesTransaction(models.Model):
     # Fields specific to TXT parser
     batch_no = models.CharField(max_length=100, null=True, blank=True)
     expiry = models.CharField(max_length=50, null=True, blank=True)
-    area = models.CharField(max_length=100, null=True, blank=True) # Renamed from 'Region'
+    area = models.CharField(max_length=100, null=True, blank=True)
 
-    # Fields specific to PDF parser
+    # Fields specific to PDF/Excel parsers
     distributor = models.CharField(max_length=255, null=True, blank=True)
     manufacturer = models.CharField(max_length=255, null=True, blank=True)
     pack_size = models.CharField(max_length=50, null=True, blank=True)
@@ -34,11 +35,15 @@ class SalesTransaction(models.Model):
     discount_amount = models.FloatField(null=True, blank=True, default=0.0)
     customer_discount_percent = models.FloatField(null=True, blank=True, default=0.0)
     
+    # --- A single, consolidated Meta class comes after all fields ---
     class Meta:
         ordering = ['-date', 'customer_name']
         indexes = [
             models.Index(fields=['date', 'area']),
         ]
+        # This is now correctly placed and will be applied
+        unique_together = [['bill_no', 'date', 'item_name']]
 
+    # --- Methods like __str__ come last, with correct indentation ---
     def __str__(self):
         return f"{self.item_name} - {self.customer_name} on {self.date}"
