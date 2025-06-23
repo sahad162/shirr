@@ -8,11 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 from django.conf import settings
 import json
+# from django.utils import timezone
 import datetime
 import traceback
 from weasyprint import HTML
 import hashlib
 from django.template.loader import render_to_string
+import tempfile
 
 from . import txt_parser
 from .models import SalesTransaction, DataFile
@@ -108,19 +110,45 @@ def _get_sales_report_summary(df):
     if df.empty: return {}
     output_data = {}
     latest_date = df['date'].max()
+    
+    # --- WEEKLY --- (This was already correct)
     df_copy = df.copy()
     df_copy['week'] = df_copy['date'].dt.to_period('W')
     weekly_sales = df_copy.groupby('week')['value'].sum().sort_index().tail(4)
     if not weekly_sales.empty:
-        output_data['Weekly'] = {'title': format_currency(weekly_sales.sum()), 'labels': weekly_sales.index.map(lambda p: p.start_time.strftime('%b %d')).tolist(), 'data': [round(v, 2) for v in weekly_sales.values], 'color': '#3b82f6'}
+        output_data['Weekly'] = {
+            'title': format_currency(weekly_sales.sum()), 
+            'labels': weekly_sales.index.map(lambda p: p.start_time.strftime('%b %d')).tolist(), 
+            'data': [round(v, 2) for v in weekly_sales.values], 
+            'color': '#3b82f6'
+        }
+
+    # --- MONTHLY ---
     monthly_df = df[(df['date'].dt.year == latest_date.year) & (df['date'].dt.month == latest_date.month)]
     if not monthly_df.empty:
-        daily_sales = monthly_df.groupby(df['date'].dt.day)['value'].sum().sort_index()
-        output_data['Monthly'] = {'title': format_currency(daily_sales.sum()), 'labels': daily_sales.index.tolist(), 'data': [round(v, 2) for v in daily_sales.values], 'color': '#10b981'}
+        # --- THIS IS THE FIX ---
+        # Group by the date column of the CORRECT dataframe (`monthly_df`)
+        daily_sales = monthly_df.groupby(monthly_df['date'].dt.day)['value'].sum().sort_index()
+        output_data['Monthly'] = {
+            'title': format_currency(daily_sales.sum()), 
+            'labels': daily_sales.index.tolist(), 
+            'data': [round(v, 2) for v in daily_sales.values], 
+            'color': '#10b981'
+        }
+
+    # --- YEARLY ---
     yearly_df = df[df['date'].dt.year == latest_date.year]
     if not yearly_df.empty:
-        monthly_sales_of_year = yearly_df.groupby(df['date'].dt.to_period('M'))['value'].sum().sort_index()
-        output_data['Yearly'] = {'title': format_currency(monthly_sales_of_year.sum()), 'labels': monthly_sales_of_year.index.map(lambda p: p.strftime('%b')).tolist(), 'data': [round(v, 2) for v in monthly_sales_of_year.values], 'color': '#8b5cf6'}
+        # --- THIS IS THE FIX ---
+        # Group by the date column of the CORRECT dataframe (`yearly_df`)
+        monthly_sales_of_year = yearly_df.groupby(yearly_df['date'].dt.to_period('M'))['value'].sum().sort_index()
+        output_data['Yearly'] = {
+            'title': format_currency(monthly_sales_of_year.sum()), 
+            'labels': monthly_sales_of_year.index.map(lambda p: p.strftime('%b')).tolist(), 
+            'data': [round(v, 2) for v in monthly_sales_of_year.values], 
+            'color': '#8b5cf6'
+        }
+        
     return output_data
 
 def _get_revenue_by_area(df):
@@ -147,7 +175,8 @@ def _get_top_medicines_by_area(df, top_n=10):
 
 # ==============================================================================
 # --- THIS IS THE CORRECTED FUNCTION ---
-# ==============================================================================
+
+
 def _get_growing_medicines(df):
     """
     For both dashboards: shows products with WoW growth.
@@ -156,6 +185,7 @@ def _get_growing_medicines(df):
     if df.empty or df['date'].dt.to_period('W').nunique() < 2:
         return {'labels': [], 'previous_week_sales': [], 'last_week_sales': []}
     
+    # Group by item and WEEKLY period
     sales = df.groupby(['item_name', df['date'].dt.to_period('W')])['value'].sum().unstack(fill_value=0).sort_index(axis=1)
     
     if sales.shape[1] < 2:
@@ -166,7 +196,7 @@ def _get_growing_medicines(df):
     growing.sort_values(by=last_week_col, ascending=False, inplace=True)
     growing = growing.head(10)
     
-    # CORRECTED: The keys now match what the PDF generator and frontend expect.
+    # CORRECT: Returns keys with "week"
     return {
         'labels': growing.index.tolist(),
         'previous_week_sales': [round(v, 2) for v in growing[prev_week_col]],
@@ -207,6 +237,7 @@ def sales_data_api(request):
     if df.empty:
         return JsonResponse({'kpiMetrics': _get_kpi_metrics(df), 'revenueByArea': [], 'salesReport': {}, 'salesTrendsByArea': {}, 'topMedicinesByArea': {}, 'growingMedicines': {}, 'prescriberAnalysis': {}, 'highFreeQuantity': {}, 'weeklyGrowthTrends': None, 'areaPerformance': None, 'totalRecords': 0,})
     df['date'] = pd.to_datetime(df['date'])
+    print(f"DEBUG: Analyzing data from {df['date'].min()} to {df['date'].max()}")
     df['value'] = pd.to_numeric(df['value'], errors='coerce').fillna(0)
     df['free_quantity'] = pd.to_numeric(df['free_quantity'], errors='coerce').fillna(0)
     response_data = {
@@ -217,13 +248,72 @@ def sales_data_api(request):
         'weeklyGrowthTrends': _get_weekly_growth_trends(df), 'areaPerformance': _get_area_performance_comparison(df),
     }
     return JsonResponse(response_data)
+# ==============================================================================
+@csrf_exempt
+@require_POST
+def api_analyze_session_view(request):
+    """
+    Analyzes one or more uploaded files without saving them to the database.
+    It parses the files, combines the data, runs the analysis functions,
+    and returns the chart-ready JSON directly.
+    """
+    uploaded_files = request.FILES.getlist('file')
+    if not uploaded_files:
+        return JsonResponse({'error': 'No files were uploaded.'}, status=400)
+
+    all_dfs = []
+    for f in uploaded_files:
+        # Use a temporary file to save the uploaded content
+        with tempfile.NamedTemporaryFile(delete=False, suffix=f.name) as temp_f:
+            for chunk in f.chunks():
+                temp_f.write(chunk)
+            temp_file_path = temp_f.name
+        
+        try:
+            # Parse the temporary file. The returned df_parsed is already clean.
+            df_parsed = txt_parser.parse_sales_file(temp_file_path)
+            if df_parsed is not None and not df_parsed.empty:
+                all_dfs.append(df_parsed)
+        finally:
+            # Clean up the temporary file
+            os.remove(temp_file_path)
+
+    if not all_dfs:
+        return JsonResponse({'error': 'Could not parse any data from the uploaded file(s). Check file format.'}, status=400)
+
+    # Combine all parsed and cleaned data into a single DataFrame
+    df = pd.concat(all_dfs, ignore_index=True)
+
+    if df.empty:
+        return JsonResponse({'error': 'Parsed data is empty.'}, status=400)
+    
+    # --- THIS IS THE FIX ---
+    # The redundant data processing lines have been removed.
+    # We now pass the clean DataFrame from the parser directly to the
+    # analysis helper functions. The 'date' column is already a datetime
+    # object, and numeric columns are already numeric.
+
+    response_data = {
+        'totalRecords': len(df),
+        'kpiMetrics': _get_kpi_metrics(df),
+        'salesReport': _get_sales_report_summary(df),
+        'revenueByArea': _get_revenue_by_area(df),
+        'salesTrendsByArea': _get_sales_trends_by_area(df),
+        'topMedicinesByArea': _get_top_medicines_by_area(df),
+        'growingMedicines': _get_growing_medicines(df),
+        'prescriberAnalysis': _get_prescriber_analysis(df),
+        'highFreeQuantity': _get_high_free_quantity_products(df),
+        'weeklyGrowthTrends': _get_weekly_growth_trends(df),
+        'areaPerformance': _get_area_performance_comparison(df),
+    }
+    
+    return JsonResponse(response_data)
 
 
 @require_http_methods(["POST"])
 @csrf_exempt
 def generate_pdf_report(request):
-    # This function is now correct and does not need to be changed.
-    # It correctly expects the keys that _get_growing_medicines now provides.
+    # This function is unchanged and correct.
     try:
         data = json.loads(request.body)
         context = {}
@@ -250,7 +340,7 @@ def generate_pdf_report(request):
                 for label, val in zip(top_meds['labels'], top_meds['data'])
             ]
         growing_data = data.get('growingMedicines', {})
-        if growing_data and 'labels' in growing_data:
+        if growing_data and 'labels' in growing_data and 'previous_week_sales' in growing_data:
             context['growingRows'] = [
                 {'label': label, 'prev': prev, 'last': last, 'growth': last - prev}
                 for label, prev, last in zip(growing_data['labels'], growing_data['previous_week_sales'], growing_data['last_week_sales'])

@@ -371,6 +371,9 @@
       </table>
     </div>
     {% endif %}
+<!-- report_template.html -->
+
+<!-- ... (head and other sections are unchanged) ... -->
 
     {% if growingRows %}
     <div class="section-block">
@@ -382,8 +385,9 @@
         <thead>
           <tr>
             <th>Medicine</th>
-            <th>Prev Month (₹)</th>
-            <th>Last Month (₹)</th>
+            <!-- --- THIS IS THE FIX --- -->
+            <th>Prev Week (₹)</th>
+            <th>Last Week (₹)</th>
             <th>Growth (₹)</th>
           </tr>
         </thead>
@@ -400,6 +404,8 @@
       </table>
     </div>
     {% endif %}
+
+<!-- ... (rest of the template is unchanged) ... -->
 
     {% if prescriberRows %}
     <div class="section-block">

@@ -149,7 +149,7 @@ def parse_excel_sales_report_format1(file_path):
                 initial_data.append({
                     "CustomerName": current_customer, "Manufacturer": current_manufacturer, "BillNo": str(row.iloc[bill_no_idx]).strip(), 
                     "Date": pd.to_datetime(row.iloc[date_idx]), "ItemName": str(row.iloc[item_name_idx]).strip(), "PTR": float(row.iloc[ptr_idx]),
-                    "Quantity": int(float(row.iloc[qty_idx])), "FREE": free_qty, "Value": float(row.iloc[value_idx]), "Region": "INTERNATIONAL"
+                    "Quantity": int(float(row.iloc[qty_idx])), "FREE": free_qty, "Value": float(row.iloc[value_idx]), "Region": "Trivandrum"
                 })
             except (ValueError, IndexError, TypeError) as e: print(f"Skipping malformed Excel row {i+1}: {e}")
         else:
@@ -331,7 +331,7 @@ def parse_sales_file(file_path):
     if df.empty:
         return df
 
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce', dayfirst=True)
     df.dropna(subset=['Date'], inplace=True)
 
     column_rename_map = {
