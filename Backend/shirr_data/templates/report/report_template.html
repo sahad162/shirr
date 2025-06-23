@@ -1,286 +1,491 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shirr Pharma - Monthly Performance Report</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-  @page { size: A4; margin: 20px; margin-bottom:30px;  margin-top:30px}
+    :root {
+      --primary: #2f2b78;
+      --primary-light: #4a45a0;
+      --secondary: #3498db;
+      --accent: #2ecc71;
+      --warning: #e74c3c;
+      --dark: #212529;
+      --medium: #495057;
+      --light: #f8f9fa;
+      --border: #dee2e6;
+      --page-margin: 22px;
+    }
 
-  body {
-    font-family: 'Lato', 'Helvetica', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: white;
-    line-height: 1.5;
-  }
+    @page {
+      size: A4;
+      margin: var(--page-margin);
+    }
 
-  .page-container { padding: 25px 30px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e6e6e6;
-    margin-bottom: 20px;
-  }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--dark);
+      background: #fff;
+      line-height: 1.5;
+      font-size: 14px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
 
-  .company-logo { height: 50px; }
+    .page-wrapper {
+      position: relative;
+    }
 
-  .company-info { text-align: right; }
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 120px;
+      font-weight: 800;
+      color: var(--primary);
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-  .company-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: #2f2b78;
-  }
+    .page-container {
+      padding: 30px 35px;
+      position: relative;
+      z-index: 1;
+    }
 
-  .report-period { font-size: 13px; color: #666; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 25px;
+    }
 
-  .report-title {
-    text-align: center;
-    margin: 25px 0;
-  }
+    .company-logo {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-  .report-title h1 {
-    margin: 0;
-    font-size: 22px;
-    color: #212529;
-    font-weight: 600;
-  }
+    .company-info {
+      text-align: right;
+    }
 
-  .report-title p {
-    margin: 5px 0 0;
-    font-size: 13px;
-    color: #6c757d;
-  }
+    .report-title {
+      text-align: center;
+      margin: 30px 0;
+    }
 
-  .section-title {
-    background-color: #f8f9fa;
-    color: #212529;
-    padding: 8px 12px;
-    margin: 20px 0 10px;
-    font-weight: 600;
-    font-size: 15px;
-    border-left: 4px solid #2f2b78;
-  }
+    .report-title h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+    }
 
-  .section-block {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    margin-bottom: 30px;
-  }
+    .report-title h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0 20px;
-  }
+    .report-title p {
+      font-size: 15px;
+      color: var(--medium);
+      font-weight: 500;
+    }
 
-  th, td {
-    border: 1px solid #dee2e6;
-    padding: 8px 10px;
-    font-size: 13px;
-  }
+    .timestamp {
+      color: var(--medium);
+      text-align: right;
+      font-size: 12px;
+      margin-top: -15px;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
 
-  th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    text-align: left;
-    color: #495057;
-  }
+    .kpi-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 16px;
+      margin: 30px 0;
+    }
 
-  tr:nth-child(even) { background-color: #fdfdfd; }
+    .kpi-card {
+      position: relative;
+      background: white;
+      border-radius: 8px;
+      padding: 14px 16px;
+      flex: 1 0 23%;
+      min-width: 120px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
 
-  footer {
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #e6e6e6;
-    text-align: center;
-    font-size: 11px;
-    color: #6c757d;
-  }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15px;
+      right: 15px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 4px;
+    }
 
-  .timestamp {
-    color: #6c757d;
-    text-align: right;
-    font-size: 11px;
-    margin-top: 5px;
-  }
+    .kpi-title {
+      font-size: 12px;
+      color: var(--medium);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
 
-  .kpi-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
-  }
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 0;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
 
-  .kpi-card {
-    background: #f8f9fa;
-    border-left: 4px solid #2f2b78;
-    padding: 15px;
-    width: 23%;
-    box-sizing: border-box;
-  }
+    .section-title {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      color: white;
+      padding: 10px 15px;
+      margin: 25px 0 15px;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  .kpi-title {
-    font-size: 12px;
-    color: #6c757d;
-    margin-bottom: 5px;
-  }
+    .section-block {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-bottom: 30px;
+    }
 
-  .kpi-value {
-    font-size: 18px;
-    font-weight: bold;
-    color: #212529;
-  }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 15px 0 25px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
 
-  .kpi-change {
-    font-size: 11px;
-    margin-top: 5px;
-  }
+    th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 15px;
+      font-size: 13.5px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
 
-  .positive { color: #28a745; }
-  .negative { color: #dc3545; }
-</style>
+    th:last-child, td:last-child {
+      border-right: none;
+    }
 
+    td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 15px;
+      font-size: 13px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fdfdfd;
+    }
+
+    tr:hover td {
+      background-color: rgba(47, 43, 120, 0.03);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      color: var(--medium);
+      position: relative;
+    }
+
+    .footer-contact {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 8px;
+      font-size: 11px;
+    }
+
+    .footer-contact span {
+      display: flex;
+      flex-direction:column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    @media print {
+      .page-break {
+        display: block;
+        page-break-before: always;
+      }
+
+      .watermark {
+        display: block;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="page-container">
-  <header>
-    <img class="company-logo" src="{{ logo_path }}" alt="Shirr Pharma Logo">
-    <div class="company-info">
-      <!-- <div class="company-name">Shirr Pharma Pvt Ltd</div> -->
-      <div class="report-period">Monthly Performance Report – {{ reporting_month }}</div>
+  <div class="page-wrapper">
+    <div class="watermark">CONFIDENTIAL</div>
+    <div class="page-container">
+    <header>
+      <div class="company-logo">
+        <img class="company-logo" src="{{ logo_path }}" alt="Shirr Pharma Logo">
+      </div>
+      <div class="company-info">
+        <div class="report-period">Generated: {{ generated_on }}</div>
+      </div>
+    </header>
+
+    <div class="report-title">
+      <h1>Sales & Distribution Performance Report</h1>
+      <p>Reporting Period: {{ reporting_period }}</p>
     </div>
-  </header>
 
-  <div class="report-title">
-    <h1>Shirr Pharma – Sales & Distribution Report</h1>
-    <p>Reporting Period: {{ reporting_period }}</p>
-  </div>
+    <div class="timestamp">Report ID: #SHIRR-REP-{{ generated_on|date:"Ym" }}-001</div>
 
-  <div class="timestamp">Generated: {{ generated_on }}</div>
-
-  {% if kpiMetrics %}
-  <div class="kpi-container">
-    <div class="kpi-card">
-      <div class="kpi-title">TOTAL REVENUE</div>
-      <div class="kpi-value">₹{{ kpiMetrics.totalSales|floatformat:2 }}</div>
-      <div class="kpi-change positive">↑ {{ kpiMetrics.salesChangePercentage }}%</div>
+    {% if kpiMetrics %}
+    <div class="kpi-container">
+      <div class="kpi-card">
+        <div class="kpi-title"><i class="fas fa-rupee-sign"></i>TOTAL REVENUE</div>
+        <div class="kpi-value">₹{{ kpiMetrics.totalSales|floatformat:2 }}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title"><i class="fas fa-pills"></i>PRODUCTS SOLD</div>
+        <div class="kpi-value">{{ kpiMetrics.totalProducts }}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title"><i class="fas fa-warehouse"></i>STOCKISTS</div>
+        <div class="kpi-value">{{ kpiMetrics.totalStockists }}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title"><i class="fas fa-shopping-cart"></i>ORDERS</div>
+        <div class="kpi-value">{{ kpiMetrics.totalOrders }}</div>
+      </div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-title">PRODUCTS SOLD</div>
-      <div class="kpi-value">{{ kpiMetrics.totalProducts }}</div>
+    {% endif %}
+
+    {% if areaPerformanceRows %}
+    <div class="section-block">
+      <div class="section-title">
+        <i class="fas fa-map-marker-alt"></i>
+        AREA-WISE PERFORMANCE
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>District</th>
+            <th>Revenue (₹)</th>
+            <th>Orders</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in areaPerformanceRows %}
+          <tr>
+            <td>{{ row.label }}</td>
+            <td>₹{{ row.totalSales|floatformat:2 }}</td>
+            <td>{{ row.orderCount }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-title">STOCKISTS</div>
-      <div class="kpi-value">{{ kpiMetrics.totalStockists }}</div>
+    {% endif %}
+
+    {% if topMedicinesRows %}
+    <div class="section-block">
+      <div class="section-title">
+        <i class="fas fa-star"></i>
+        TOP SELLING PRODUCTS
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Revenue (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in topMedicinesRows %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>₹{{ row.revenue|floatformat:2 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-title">ORDERS</div>
-      <div class="kpi-value">{{ kpiMetrics.totalOrders }}</div>
+    {% endif %}
+
+    {% if growingRows %}
+    <div class="section-block">
+      <div class="section-title">
+        <i class="fas fa-chart-line"></i>
+        FASTEST GROWING MEDICINES
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Medicine</th>
+            <th>Prev Month (₹)</th>
+            <th>Last Month (₹)</th>
+            <th>Growth (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in growingRows %}
+          <tr>
+            <td>{{ row.label }}</td>
+            <td>₹{{ row.prev|floatformat:2 }}</td>
+            <td>₹{{ row.last|floatformat:2 }}</td>
+            <td>₹{{ row.growth|floatformat:2 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-  </div>
-  {% endif %}
+    {% endif %}
 
-  {% if areaPerformanceRows %}
-  <div class="section-block">
-    <div class="section-title">1. District-wise Performance</div>
-    <table>
-      <tr><th>District</th><th>Revenue (₹)</th><th>Orders</th></tr>
-      {% for row in areaPerformanceRows %}
-      <tr>
-        <td>{{ row.label }}</td>
-        <td>₹{{ row.totalSales|floatformat:2 }}</td>
-        <td>{{ row.orderCount }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {% endif %}
+    {% if prescriberRows %}
+    <div class="section-block">
+      <div class="section-title">
+        <i class="fas fa-user-md"></i>
+        TOP PRESCRIBERS
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Prescriber</th>
+            <th>Revenue (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in prescriberRows %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>₹{{ row.revenue|floatformat:2 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
 
-  {% if topMedicinesRows %}
-  <div class="section-block">
-    <div class="section-title">2. Top Selling Products</div>
-    <table>
-      <tr><th>Product</th><th>Revenue (₹)</th></tr>
-      {% for row in topMedicinesRows %}
-      <tr>
-        <td>{{ row.name }}</td>
-        <td>₹{{ row.revenue|floatformat:2 }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {% endif %}
+    {% if freeQtyRows %}
+    <div class="section-block">
+      <div class="section-title">
+        <i class="fas fa-gift"></i>
+        HIGH FREE QUANTITY MEDICINES
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Free Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in freeQtyRows %}
+          <tr>
+            <td>{{ row.product }}</td>
+            <td>{{ row.qty }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
 
-  {% if growingRows %}
-  <div class="section-block">
-    <div class="section-title">3. Fastest Growing Medicines</div>
-    <table>
-      <tr><th>Medicine</th><th>Prev Month (₹)</th><th>Last Month (₹)</th><th>Growth (₹)</th></tr>
-      {% for row in growingRows %}
-      <tr>
-        <td>{{ row.label }}</td>
-        <td>₹{{ row.prev|floatformat:2 }}</td>
-        <td>₹{{ row.last|floatformat:2 }}</td>
-        <td>₹{{ row.growth|floatformat:2 }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {% endif %}
+    <!-- {% if weeklyGrowthRows %}
+    <div class="section-block">
+      <div class="section-title">
+        <i class="fas fa-calendar-alt"></i>
+        WEEKLY GROWTH TREND
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Growth (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in weeklyGrowthRows %}
+          <tr>
+            <td>{{ row.week }}</td>
+            <td>{{ row.percent|floatformat:2 }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %} -->
 
-  {% if prescriberRows %}
-  <div class="section-block">
-    <div class="section-title">4. Top Prescribers</div>
-    <table>
-      <tr><th>Prescriber</th><th>Revenue (₹)</th></tr>
-      {% for row in prescriberRows %}
-      <tr>
-        <td>{{ row.name }}</td>
-        <td>₹{{ row.revenue|floatformat:2 }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+    <footer>
+      <p>CONFIDENTIAL REPORT - PROPERTY OF SHIRR PHARMA PVT LTD</p>
+      <div class="footer-contact">
+        <div><i class="fas fa-envelope"></i>contact@shirrpharma.com</div>
+        <div><i class="fa fa-mobile"></i>+91 9074720664</div>
+        <div><i class="fas fa-map-marker-alt"></i> 68/428(1), Thiruvallam, Thiruvananthapuram, Kerala 695027</div>
+      </div>
+      <p style="margin-top: 10px;">© {{ generated_on|date:"Y" }} Shirr Pharma Pvt Ltd. All rights reserved.</p>
+    </footer>
+   </div>
   </div>
-  {% endif %}
-
-  {% if freeQtyRows %}
-  <div class="section-block">
-    <div class="section-title">5. High Free Quantity Medicines</div>
-    <table>
-      <tr><th>Product</th><th>Free Quantity</th></tr>
-      {% for row in freeQtyRows %}
-      <tr>
-        <td>{{ row.product }}</td>
-        <td>{{ row.qty }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {% endif %}
-
-  {% if weeklyGrowthRows %}
-  <div class="section-block">
-    <div class="section-title">6. Weekly Growth Trend</div>
-    <table>
-      <tr><th>Week</th><th>Growth (%)</th></tr>
-      {% for row in weeklyGrowthRows %}
-      <tr>
-        <td>{{ row.week }}</td>
-        <td>{{ row.percent|floatformat:2 }}%</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {% endif %}
-
-  <footer>
-    <p>Confidential Report – Shirr Pharma Pvt Ltd | contact@shirrpharma.com | +91 9074720664</p>
-    <p>68/428(1), Thiruvallam, Thiruvananthapuram, Kerala 695027</p>
-  </footer>
-</div>
 </body>
 </html>
