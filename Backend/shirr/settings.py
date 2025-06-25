@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,11 +85,11 @@ WSGI_APPLICATION = 'shirr.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE':   'django.db.backends.postgresql',
-    'NAME':     'shirr_db',
-    'USER':     'postgres',       
-    'PASSWORD': 'Root', 
-    'HOST':     'localhost',
-    'PORT':     '5432',
+    'NAME':     os.getenv('NAME'),
+    'USER':     os.getenv('USER'),       
+    'PASSWORD': os.getenv('PASSWORD'), 
+    'HOST':     os.getenv('HOST'),
+    'PORT':     os.getenv('5432'),
   }
 }
 

@@ -29,18 +29,9 @@ export default function MetricCard({
       <div className="low-head mt-3 flex justify-between">
         <div className="amount space-y-4">
           <h2 className="text-2xl font-bold  text-gray-900">{value}</h2>
-          <div
-            className={`flex items-center gap-1 text-sm font-medium ${
-              trend === "up" ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {trend === "up" ? <MoveUp size={16} /> : <MoveDown size={16} />}
-            {trend === "up" ? "+" : "-"}
-            {Math.abs(change)}%
-          </div>
          
         </div>
-         <div className=" w-1/2 h-8">
+         <div className=" w-1/2">
             <SparkBar data={sparkData} color={sparkColor} />
           </div>
       </div>
