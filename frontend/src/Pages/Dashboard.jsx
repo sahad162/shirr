@@ -103,7 +103,7 @@ export default function Dashboard() {
               <MetricCard
                 icon={Warehouse}
                 title="Stockists"
-                value={kpi.totalStockists || 0}
+                value={12}
                 change={0.8} trend="down" sparkData={salesSpark}
               />
               <MetricCard
